@@ -1,4 +1,5 @@
 import uniout
+import sys
 
 tags = {}
 inFile = open('yelp_tags_data', 'r')
@@ -12,7 +13,7 @@ inFile.close()
 
 collected_tags = []
 
-sentence = raw_input("Input a sentence: ")
+sentence = raw_input("Input a sentence: ").decode(sys.stdin.encoding).encode('utf8')
 
 for tag, keywords in tags.items():
 	for keyword in keywords:
