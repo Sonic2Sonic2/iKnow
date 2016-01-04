@@ -31,7 +31,7 @@ $$$$:高級,高價
 
 #分類_商店_食品 
 便利商店 Convenience Stores:便利商店,超商
-冰淇淋／冰凍優格 Ice Cream & Frozen Yogurt:冰淇淋:冰
+冰淇淋／冰凍優格 Ice Cream & Frozen Yogurt:冰淇淋,冰
 咖啡或茶 Coffee & Tea:咖啡,茶
 啤酒釀製店 Breweries:啤酒
 啤酒，葡萄酒及烈酒 Beer, Wine & Spirits:酒
@@ -40,19 +40,19 @@ $$$$:高級,高價
 挫冰 Shaved Ice:挫冰
 有機店 Organic Stores:有機
 杯子蛋糕 Cupcakes:杯子蛋糕
-果汁冰沙店 Juice Bars & Smoothies:果汁,冰沙
+果汁冰沙店 Juice Bars & Smoothies:果汁,冰沙,冰砂
 法式蛋糕/蛋糕店 Patisserie/Cake Shop:蛋糕
 熟食店 Delicatessen:熟食
 特色食品 Specialty Food:特色
-珍珠奶茶 Bubble Tea:珍珠奶茶
+珍珠奶茶 Bubble Tea:珍珠奶茶,珍奶
 甜甜圈 Donuts:甜甜圈
 甜點 Desserts:甜點
-網咖 Internet Cafes:網咖,網路
+網咖 Internet Cafes:網咖,網路,網吧
 肉食品店 Butcher:肉
-自製食品 Do-It-Yourself Food:手制,手工
+自製食品 Do-It-Yourself Food:手制,手工,手做,手作,手製
 茶室 Tea Rooms:茶
 蒸餾酒廠 Distilleries:蒸餾酒
-街頭小吃 Street Vendors:小吃
+街頭小吃 Street Vendors:小吃,攤販,路邊攤
 西打汽水 Cideries:汽水
 貝果 Bagels:貝果
 超級市場 Grocery:超市,超商
@@ -63,12 +63,12 @@ $$$$:高級,高價
 
 
 #分類_商店_餐廳
-三明治 Sandwiches:三明治
+三明治 Sandwiches:三明治,三文治
 不含麩質 Gluten-Free:不含麩質
 
-中國菜 Chinese:中國
+中國菜 Chinese:中國,中華,中式
 上海菜 Shanghainese:上海
-北京菜:北京
+北京菜:北京,北平
 四川菜 Szechuan:四川
 客家菜:客家
 廣東菜 Cantonese:廣東
@@ -76,7 +76,7 @@ $$$$:高級,高價
 潮州菜:潮州
 福州菜:福州
 福建:福建
-粥粉麵:粥粉麵
+粥粉麵:粥粉麵,粥,麵
 興化:興化
 點心 Dim Sum:點心
 
@@ -91,7 +91,7 @@ $$$$:高級,高價
 印尼菜 Indonesian:印尼
 印度菜 Indian:印度
 古巴菜 Cuban:古巴
-台灣菜 Taiwanese:台灣
+台灣菜 Taiwanese:台灣,台式
 咖啡廳 Cafes:咖啡
 喜馬拉雅山／尼泊爾 Himalayan/Nepalese:尼泊爾,喜馬拉雅
 國際菜 International:國際
@@ -108,7 +108,7 @@ $$$$:高級,高價
 巴斯克菜 Basque:巴斯克
 巴西菜 Brazilian:巴西
 希臘菜 Greek:希臘
-德國菜 German:德國
+德國菜 German:德國,德式
 德州－墨西哥混合菜 Tex-Mex:德州,墨西哥
 快餐 Fast Food:快餐,速食
 愛爾蘭菜 Irish:愛爾蘭
@@ -150,12 +150,12 @@ $$$$:高級,高價
 比利時菜 Belgian:比利時
 沙威馬 Kebab:沙威馬
 沙拉 Salad:沙威馬
-法國菜 French:法國
+法國菜 French:法國,法式
 法式薄餅 Creperies:法式薄餅
 法式餐廳 Brasseries:法式餐廳
 波斯菜／伊朗菜 Persian/Iranian:波斯,伊朗
 波蘭菜 Polish:波蘭
-泰國菜 Thai:泰國
+泰國菜 Thai:泰國,泰式
 海鮮 Seafood:海鮮
 清真 Halal:清真
 湯 Soup:湯
@@ -175,7 +175,7 @@ $$$$:高級,高價
 緬甸菜 Burmese:緬甸
 美國南部菜 Cajun/Creole:美國南部
 美國菜（傳統） American (Traditional):美國
-義大利菜 Italian:義大利
+義大利菜 Italian:義大利,義式
 自助餐 Cafeteria:自助餐
 自助餐 Buffets:自助餐
 英國菜 British:英國
