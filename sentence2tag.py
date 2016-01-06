@@ -12,10 +12,27 @@ for line in infile:
 	tags.update({linearr[0]:linearr[1]})
 infile.close()
 
-position_detected_keywords = []
+position_detected_keywords_front = []
+position_detected_keywords_back = []
 infile = open('position_detected_keywords', 'r')
+while 1:
+	line = infile.readline()
+	if line[0] == '#' or not line: break
+	position_detected_keywords_front.append(line.strip('\n').strip('\r\n'))
+while 1:
+	line = infile.readline()
+	if not line: break
+	position_detected_keywords_back.append(line.strip('\n').strip('\r\n'))
+infile.close()
+
+position_keywords = {} 
+infile = open('taipeiLocationDict.txt', 'r')
 for line in infile:
-	position_detected_keywords.append(line.strip('\n').strip('\r\n'))
+	if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue
+	linearr = line.strip('\n').strip('\r\n').split(':')
+	linearr[1] = linearr[1].split(',')
+	if linearr[1][0] == '': linearr[1] = []
+	position_keywords.update({linearr[0]:linearr[1]})
 infile.close()
 
 collected_tags = []
@@ -37,18 +54,39 @@ for tag, keywords in tags.items():
 
 print collected_tags
 
+# find position base on keyword
 position = ''
-# find position in sentence. detect keyword, and posseg sentence before the keyword, using nearest n or ns as position
-for keyword in position_detected_keywords:
-	if keyword in sentence:
-		sub_sentence = sentence[:sentence.index(keyword)]
-		words = pseg.cut(sub_sentence)
-		for word, tag in list(reversed(list(words))):
-			word = word.encode('utf8')
-			tag = tag.encode('utf8')
-			if tag != 'n' and tag != 'ns':
-				break
-			position = word + position
+for p, keywords in position_keywords.items():
+	for keyword in keywords:
+		if keyword in sentence:
+			position = p
+			break
+if position == '':
+	# find position in sentence. detect keyword, and posseg sentence before the keyword, using nearest n or ns as position
+	for keyword in position_detected_keywords_front:
+		if keyword in sentence:
+			sub_sentence = sentence[:sentence.index(keyword)]
+			words = pseg.cut(sub_sentence)
+			for word, tag in list(reversed(list(words))):
+				word = word.encode('utf8')
+				tag = tag.encode('utf8')
+				if tag != 'n' and tag != 'ns':
+					break
+				position = word + position
+	if position == '':
+		# from back
+		for keyword in position_detected_keywords_back:
+			if keyword in sentence:
+				sub_sentence = sentence[sentence.index(keyword)+len(keyword):]
+				words = pseg.cut(sub_sentence)
+				for word, tag in list(words):
+					word = word.encode('utf8')
+					tag = tag.encode('utf8')
+					if tag != 'n' and tag != 'ns':
+						break
+					position = position + word
+
+	
 
 print position
 
