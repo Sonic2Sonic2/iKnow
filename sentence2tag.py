@@ -70,7 +70,8 @@ if position == '':
 			for word, tag in list(reversed(list(words))):
 				word = word.encode('utf8')
 				tag = tag.encode('utf8')
-				if tag != 'n' and tag != 'ns':
+				print word, tag
+				if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
 					break
 				position = word + position
 	if position == '':
@@ -82,7 +83,8 @@ if position == '':
 				for word, tag in list(words):
 					word = word.encode('utf8')
 					tag = tag.encode('utf8')
-					if tag != 'n' and tag != 'ns':
+					print word, tag
+					if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
 						break
 					position = position + word
 
