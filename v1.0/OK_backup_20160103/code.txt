@@ -1,0 +1,555 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "台大",
+               "short_name" : "台大",
+               "types" : [ "point_of_interest", "establishment" ]
+            },
+            {
+               "long_name" : "大安區",
+               "short_name" : "大安區",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "台北市",
+               "short_name" : "台北市",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Taiwan",
+               "short_name" : "TW",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "106",
+               "short_name" : "106",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "106, Taiwan, 台北市大安區台大",
+         "geometry" : {
+            "location" : {
+               "lat" : 25.017848,
+               "lng" : 121.533683
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 25.0191969802915,
+                  "lng" : 121.5350319802915
+               },
+               "southwest" : {
+                  "lat" : 25.01649901970849,
+                  "lng" : 121.5323340197085
+               }
+            }
+         },
+         "place_id" : "ChIJA6BLfImpQjQRUxmKBSD4Uio",
+         "types" : [
+            "bus_station",
+            "transit_station",
+            "point_of_interest",
+            "establishment"
+         ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "基泰臺大",
+               "short_name" : "基泰臺大",
+               "types" : [ "premise" ]
+            },
+            {
+               "long_name" : "Section 3, Roosevelt Road",
+               "short_name" : "Section 3, Roosevelt Rd",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Da’an District",
+               "short_name" : "Da’an District",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Taipei City",
+               "short_name" : "Taipei City",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Taiwan",
+               "short_name" : "TW",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "106",
+               "short_name" : "106",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "106, Taiwan, Taipei City, Da’an District, Section 3, Roosevelt Rd, 基泰臺大",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 25.0176308,
+                  "lng" : 121.5322921
+               },
+               "southwest" : {
+                  "lat" : 25.0171574,
+                  "lng" : 121.5318816
+               }
+            },
+            "location" : {
+               "lat" : 25.0173941,
+               "lng" : 121.5320868
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 25.0187430802915,
+                  "lng" : 121.5334358302915
+               },
+               "southwest" : {
+                  "lat" : 25.0160451197085,
+                  "lng" : 121.5307378697085
+               }
+            }
+         },
+         "partial_match" : true,
+         "place_id" : "ChIJ5VSL74upQjQRH9ld5uAg4Vw",
+         "types" : [ "premise" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Dadao Road",
+               "short_name" : "Dadao Rd",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "豐樂里",
+               "short_name" : "豐樂里",
+               "types" : [ "administrative_area_level_4", "political" ]
+            },
+            {
+               "long_name" : "Taitung City",
+               "short_name" : "Taitung City",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Taitung County",
+               "short_name" : "Taitung County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Taiwan",
+               "short_name" : "TW",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "950",
+               "short_name" : "950",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Dadao Rd, Taitung City, Taitung County, Taiwan 950",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 22.758154,
+                  "lng" : 121.1332427
+               },
+               "southwest" : {
+                  "lat" : 22.7574604,
+                  "lng" : 121.1325625
+               }
+            },
+            "location" : {
+               "lat" : 22.758154,
+               "lng" : 121.1325625
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 22.7591561802915,
+                  "lng" : 121.1342515802915
+               },
+               "southwest" : {
+                  "lat" : 22.7564582197085,
+                  "lng" : 121.1315536197085
+               }
+            }
+         },
+         "partial_match" : true,
+         "place_id" : "ChIJIfYYRQy5bzQRg8FSewDG_JA",
+         "types" : [ "route" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "台大醫院",
+               "short_name" : "台大醫院",
+               "types" : [ "point_of_interest", "establishment" ]
+            },
+            {
+               "long_name" : "中正區",
+               "short_name" : "中正區",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "台北市",
+               "short_name" : "台北市",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Taiwan",
+               "short_name" : "TW",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "100",
+               "short_name" : "100",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "100, Taiwan, 台北市中正區台大醫院",
+         "geometry" : {
+            "location" : {
+               "lat" : 25.042467,
+               "lng" : 121.518432
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 25.0438159802915,
+                  "lng" : 121.5197809802915
+               },
+               "southwest" : {
+                  "lat" : 25.0411180197085,
+                  "lng" : 121.5170830197085
+               }
+            }
+         },
+         "partial_match" : true,
+         "place_id" : "ChIJ4VZUdXSpQjQRnK7jueSQWrg",
+         "types" : [
+            "bus_station",
+            "transit_station",
+            "point_of_interest",
+            "establishment"
+         ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Dadao Road",
+               "short_name" : "Dadao Rd",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Xinyi District",
+               "short_name" : "Xinyi District",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Taipei City",
+               "short_name" : "Taipei City",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Taiwan",
+               "short_name" : "TW",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "110",
+               "short_name" : "110",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Dadao Rd, Xinyi District, Taipei City, Taiwan 110",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 25.0431092,
+                  "lng" : 121.5837509
+               },
+               "southwest" : {
+                  "lat" : 25.0380447,
+                  "lng" : 121.5810497
+               }
+            },
+            "location" : {
+               "lat" : 25.0408123,
+               "lng" : 121.5824724
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 25.0431092,
+                  "lng" : 121.5837509
+               },
+               "southwest" : {
+                  "lat" : 25.0380447,
+                  "lng" : 121.5810497
+               }
+            }
+         },
+         "partial_match" : true,
+         "place_id" : "ChIJBQ19gKCrQjQRxgpALc9Tprc",
+         "types" : [ "route" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "台大鳳凰自然教育園區",
+               "short_name" : "台大鳳凰自然教育園區",
+               "types" : [ "point_of_interest", "establishment" ]
+            },
+            {
+               "long_name" : "1號",
+               "short_name" : "1號",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Renyi Road",
+               "short_name" : "Renyi Rd",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Lugu Township",
+               "short_name" : "Lugu Township",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Nantou County",
+               "short_name" : "Nantou County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Taiwan",
+               "short_name" : "TW",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "558",
+               "short_name" : "558",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "558, Taiwan, Nantou County, Lugu Township, Renyi Rd, 1號台大鳳凰自然教育園區",
+         "geometry" : {
+            "location" : {
+               "lat" : 23.7284222,
+               "lng" : 120.787918
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 23.72977118029151,
+                  "lng" : 120.7892669802915
+               },
+               "southwest" : {
+                  "lat" : 23.7270732197085,
+                  "lng" : 120.7865690197085
+               }
+            }
+         },
+         "partial_match" : true,
+         "place_id" : "ChIJO_O1EOzTbjQR8SsXQAyDPhk",
+         "types" : [ "park", "point_of_interest", "establishment" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "MRT NTU Hospital Station",
+               "short_name" : "MRT NTU Hospital Station",
+               "types" : [ "point_of_interest", "establishment" ]
+            },
+            {
+               "long_name" : "Zhongzheng District",
+               "short_name" : "Zhongzheng District",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Taipei City",
+               "short_name" : "Taipei City",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Taiwan",
+               "short_name" : "TW",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "100",
+               "short_name" : "100",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "MRT NTU Hospital Station, Zhongzheng District, Taipei City, Taiwan 100",
+         "geometry" : {
+            "location" : {
+               "lat" : 25.041256,
+               "lng" : 121.51604
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 25.0426049802915,
+                  "lng" : 121.5173889802915
+               },
+               "southwest" : {
+                  "lat" : 25.0399070197085,
+                  "lng" : 121.5146910197085
+               }
+            }
+         },
+         "partial_match" : true,
+         "place_id" : "ChIJGb7zOHSpQjQRxThh2IO9CDM",
+         "types" : [
+            "museum",
+            "subway_station",
+            "transit_station",
+            "point_of_interest",
+            "establishment"
+         ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "臺豐大樓",
+               "short_name" : "臺豐大樓",
+               "types" : [ "premise" ]
+            },
+            {
+               "long_name" : "Section 2, Nanjing East Road",
+               "short_name" : "Section 2, Nanjing E Rd",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "中吉里",
+               "short_name" : "中吉里",
+               "types" : [ "administrative_area_level_4", "political" ]
+            },
+            {
+               "long_name" : "Zhongshan District",
+               "short_name" : "Zhongshan District",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Taipei City",
+               "short_name" : "Taipei City",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Taiwan",
+               "short_name" : "TW",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "104",
+               "short_name" : "104",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "104, Taiwan, Taipei City, Zhongshan District, Section 2, Nanjing E Rd, 臺豐大樓",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 25.0524721,
+                  "lng" : 121.5309212
+               },
+               "southwest" : {
+                  "lat" : 25.0522005,
+                  "lng" : 121.5306616
+               }
+            },
+            "location" : {
+               "lat" : 25.0523363,
+               "lng" : 121.5307914
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 25.0536852802915,
+                  "lng" : 121.5321403802915
+               },
+               "southwest" : {
+                  "lat" : 25.0509873197085,
+                  "lng" : 121.5294424197085
+               }
+            }
+         },
+         "partial_match" : true,
+         "place_id" : "ChIJG5JQ0GapQjQRGsV5039ggJk",
+         "types" : [ "premise" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "臺大寰宇堂大廈",
+               "short_name" : "臺大寰宇堂大廈",
+               "types" : [ "premise" ]
+            },
+            {
+               "long_name" : "Section 4, Roosevelt Road",
+               "short_name" : "Section 4, Roosevelt Rd",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Zhongzheng District",
+               "short_name" : "Zhongzheng District",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Taipei City",
+               "short_name" : "Taipei City",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Taiwan",
+               "short_name" : "TW",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "100",
+               "short_name" : "100",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "100, Taiwan, Taipei City, Zhongzheng District, Section 4, Roosevelt Rd, 臺大寰宇堂大廈",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 25.0126686,
+                  "lng" : 121.5361751
+               },
+               "southwest" : {
+                  "lat" : 25.012386,
+                  "lng" : 121.5358792
+               }
+            },
+            "location" : {
+               "lat" : 25.0125273,
+               "lng" : 121.5360272
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 25.0138762802915,
+                  "lng" : 121.5373761302915
+               },
+               "southwest" : {
+                  "lat" : 25.0111783197085,
+                  "lng" : 121.5346781697085
+               }
+            }
+         },
+         "partial_match" : true,
+         "place_id" : "ChIJsdH9uYqpQjQRmDboczJwWBs",
+         "types" : [ "premise" ]
+      }
+   ],
+   "status" : "OK"
+}

@@ -1,0 +1,296 @@
+#商店 Businesses
+#食品 Food
+#餐廳 Restaurants
+
+#共用篩選
+#分類_商店_食品
+#分類_商店_餐廳
+#特點_商店_食品
+#特點_商店_餐廳
+
+
+
+#共用篩選 Filters
+
+#鄰近地區 Cities
+
+#距離 Distance
+
+駕駛路程(8公里) Driving (8 km.):
+單車路程(4公里) Biking (4 km.):
+步行路程(2公里) Walking (2 km.):
+半公里以內 Within 4 blocks:附近
+
+#價格
+$:便宜
+$$:普通
+$$$:貴
+$$$$:高級,高價
+
+
+
+#分類_商店_食品 
+便利商店 Convenience Stores:便利商店,超商
+冰淇淋／冰凍優格 Ice Cream & Frozen Yogurt:冰淇淋:冰
+咖啡或茶 Coffee & Tea:咖啡,茶
+啤酒釀製店 Breweries:啤酒
+啤酒，葡萄酒及烈酒 Beer, Wine & Spirits:酒
+外賣外送服務 Food Delivery Services:外賣,外送
+快餐車 Food Trucks:快餐
+挫冰 Shaved Ice:挫冰
+有機店 Organic Stores:有機
+杯子蛋糕 Cupcakes:杯子蛋糕
+果汁冰沙店 Juice Bars & Smoothies:果汁,冰沙
+法式蛋糕/蛋糕店 Patisserie/Cake Shop:蛋糕
+熟食店 Delicatessen:熟食
+特色食品 Specialty Food:特色
+珍珠奶茶 Bubble Tea:珍珠奶茶
+甜甜圈 Donuts:甜甜圈
+甜點 Desserts:甜點
+網咖 Internet Cafes:網咖,網路
+肉食品店 Butcher:肉
+自製食品 Do-It-Yourself Food:手制,手工
+茶室 Tea Rooms:茶
+蒸餾酒廠 Distilleries:蒸餾酒
+街頭小吃 Street Vendors:小吃
+西打汽水 Cideries:汽水
+貝果 Bagels:貝果
+超級市場 Grocery:超市,超商
+農夫市集 Farmers Market:農夫
+酒莊 Wineries:酒莊
+麵包舖 Bakeries:麵包
+
+
+
+#分類_商店_餐廳
+三明治 Sandwiches:三明治
+不含麩質 Gluten-Free:不含麩質
+
+中國菜 Chinese:中國
+上海菜 Shanghainese:上海
+北京菜:北京
+四川菜 Szechuan:四川
+客家菜:客家
+廣東菜 Cantonese:廣東
+湖南菜:湖南
+潮州菜:潮州
+福州菜:福州
+福建:福建
+粥粉麵:粥粉麵
+興化:興化
+點心 Dim Sum:點心
+
+中東菜 Middle Eastern:中東
+亞洲融合 Asian Fusion:亞洲融合
+伊索比亞菜 Ethiopian:伊索比亞
+俄羅斯菜 Russian:俄羅斯
+全素 Vegan:素
+加勒比菜 Caribbean:加勒比
+匈牙利菜 Hungarian:匈牙利
+北歐菜 Scandinavian:北歐
+印尼菜 Indonesian:印尼
+印度菜 Indian:印度
+古巴菜 Cuban:古巴
+台灣菜 Taiwanese:台灣
+咖啡廳 Cafes:咖啡
+喜馬拉雅山／尼泊爾 Himalayan/Nepalese:尼泊爾,喜馬拉雅
+國際菜 International:國際
+土耳其菜 Turkish:土耳其
+地中海菜 Mediterranean:地中海
+墨西哥菜 Mexican:墨西哥
+壽司店 Sushi Bars:壽司
+夏威夷菜 Hawaiian:夏威夷
+奧地利菜 Austrian:奧地利
+孟加拉菜 Bangladeshi:孟加拉
+寮國菜 Laotian:寮國
+小館 Bistros:小館
+巴基斯坦菜 Pakistani:巴基斯坦
+巴斯克菜 Basque:巴斯克
+巴西菜 Brazilian:巴西
+希臘菜 Greek:希臘
+德國菜 German:德國
+德州－墨西哥混合菜 Tex-Mex:德州,墨西哥
+快餐 Fast Food:快餐,速食
+愛爾蘭菜 Irish:愛爾蘭
+拉丁美洲菜 Latin American:拉丁美洲
+摩洛哥菜 Moroccan:摩洛哥
+攤販 Food Stands:攤販,路邊攤
+敘利亞菜 Syrian:敘利亞
+斯里蘭卡料理 Sri Lankan:斯里蘭卡
+新加坡菜 Singaporean:新加坡
+新鮮／生食食品 Live/Raw Food:新鮮,生食
+
+日本料理 Japanese:日本
+丼物:丼
+壽喜燒:壽喜燒
+天婦羅:天婦羅
+居酒屋:居酒屋
+御好燒:御好燒
+御飯糰:飯糰
+懷石料理:懷石
+手捲:手捲
+拉麵 Ramen:拉麵
+日式內臟燒:日式內臟燒
+日式咖哩:咖哩
+日式烤肉:烤肉
+日式烤雞串:烤雞串
+炸豬排:炸豬排
+烏龍:烏龍
+爐端燒:爐端燒
+章魚燒:章魚燒
+蕎麥麵:蕎麥麵
+西式日本料理:西式日本料理
+迴轉壽司:迴轉壽司
+鐵板燒:鐵板燒
+關東煮:關東煮
+鰻魚:鰻魚
+
+早餐及早午餐 Breakfast & Brunch:早餐,早午餐
+柬埔寨菜 Cambodian:柬埔寨
+比利時菜 Belgian:比利時
+沙威馬 Kebab:沙威馬
+沙拉 Salad:沙威馬
+法國菜 French:法國
+法式薄餅 Creperies:法式薄餅
+法式餐廳 Brasseries:法式餐廳
+波斯菜／伊朗菜 Persian/Iranian:波斯,伊朗
+波蘭菜 Polish:波蘭
+泰國菜 Thai:泰國
+海鮮 Seafood:海鮮
+清真 Halal:清真
+湯 Soup:湯
+漢堡 Burgers:漢堡
+澳洲菜 Australian:澳洲
+火鍋 Hot Pot:火鍋
+炸魚薯條 Fish & Chips:炸魚,薯條
+烏克蘭菜 Ukrainian:烏克蘭
+熟食店 Delis:熟食
+熱狗 Hot Dogs:熱狗
+燒烤 Barbeque:燒烤
+牛排館 Steakhouses:牛排
+猶太教潔食 Kosher:猶太
+現代歐洲菜 Modern European:現代歐洲
+秘魯菜 Peruvian:秘魯
+素食 Vegetarian:素
+緬甸菜 Burmese:緬甸
+美國南部菜 Cajun/Creole:美國南部
+美國菜（傳統） American (Traditional):美國
+義大利菜 Italian:義大利
+自助餐 Cafeteria:自助餐
+自助餐 Buffets:自助餐
+英國菜 British:英國
+英式酒吧餐館 Gastropubs:英式酒吧
+菲律賓菜 Filipino:菲律賓
+葡萄牙菜 Portuguese:葡萄牙
+蒙古菜 Mongolian:蒙古
+薄餅 Pizza:薄餅,披薩,pizza,Pizza
+西班牙小食 Tapas/Small Plates:西班牙
+西班牙小食酒吧 Tapas Bars:西班牙
+西班牙菜 Spanish:西班牙
+西餐館 Diners:西餐
+起司火鍋 Fondue:起司火鍋
+越南菜 Vietnamese:越南
+阿富汗菜 Afghan:阿富汗
+阿拉伯菜 Arabian:阿富汗
+阿根廷菜 Argentine:阿根廷
+雞翅 Chicken Wings:雞翅
+雞肉專門店 Chicken Shop:雞肉
+非洲菜 African:非洲
+韓國菜 Korean:韓
+馬來西亞菜 Malaysian:馬來西亞
+
+
+
+#篩選_商店_餐廳
+#一般篩選項目 General Features
+#開放時間 Open At
+開放中 Open Now:開放中,現在有開
+是否接受訂位 Takes Reservations:可以訂
+是否接受信用卡 Accepts Credit Cards:信用卡
+是否提供外送 Delivery:外送
+是否提供戶外座位 Outdoor Seating:戶外
+是否適合兒童 Good for Kids:兒童,小孩
+是否適合團體 Good for Groups:團體,多人
+是否有服務生服務 Waiter Service:服務生
+是否接受外帶 Take-out:外帶
+可供輪椅進出 Wheelchair Accessible:殘障,輪椅
+是否有電視 Has TV:電視
+允許寵物狗 Dogs Allowed:狗
+最夯最新 Hot and New:新
+
+#Alcohol
+酒吧 Full Bar:酒吧
+啤酒及餐酒 Beer & Wine Only:啤酒,餐酒
+#Happy Hour
+
+#Meals Served
+早餐 Breakfast:早餐
+早午餐 Brunch:早午餐,早餐,午餐
+午餐 Lunch:午餐
+晚餐 Dinner:晚餐
+甜點 Dessert:甜點
+宵夜 Late Night:消夜,宵夜
+
+#Music
+DJ:DJ
+Juke Box:Juke Box
+Karaoke:Karaoke,卡拉OK
+Live:Live
+
+#Parking
+街道 Street:
+停車場 Garage:停車場
+代客 Valet:代客
+私人停車場 Private Lot:私人停車場
+免費泊車 Validated:免費停車,免費泊車
+
+#Wi-Fi
+免費 Free:免費Wi-Fi,Wi-Fi
+收費 Paid:Wi-Fi
+
+#Smoking
+No:禁菸
+#Outdoor Area/ Patio Only
+Yes:露天
+
+
+
+#篩選_商店_食品
+#一般篩選項目 General Features
+#開放時間 Open At
+#開放中 Open Now
+#是否接受訂位 Takes Reservations
+#是否接受信用卡 Accepts Credit Cards
+#是否提供外送 Delivery
+#是否提供戶外座位 Outdoor Seating
+#是否適合兒童 Good for Kids
+#是否適合團體 Good for Groups
+#是否有服務生服務 Waiter Service
+#是否接受外帶 Take-out
+#可供輪椅進出 Wheelchair Accessible
+
+#Alcohol
+#酒吧 Full Bar
+#啤酒及餐酒 Beer & Wine Only
+#Happy Hour
+#
+#Parking
+#街道 Street
+#停車場 Garage
+#代客 Valet
+#私人停車場 Private Lot
+#免費泊車 Validated
+#
+#Wi-Fi
+#免費 Free
+#收費 Paid
+
+
+
+#===============================================================================
+#有問題的部分：                                                                 =
+#1. 中國菜和日本料理大部分都沒有對應英文分類，處理之前要注意一下                    =
+#2. Japanese > Teppanyaki (鐵板燒，這是個大bug)                                 =
+#3. 薄餅 對應的英文分類是 pizza ，我會在中文加上[比薩]，[披薩]這兩個同義詞          =
+#4. 另外，我有刪掉一些分類，都是些在台灣找不到結果的空分類，我也忘了有哪些，就不用管了=
+#===============================================================================
