@@ -10,7 +10,7 @@ import json
 import urllib
 #from nltk.corpus import stopwords
 #from nltk.tokenize import word_tokenize
- 
+
 class GUIDemo(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
@@ -22,7 +22,8 @@ class GUIDemo(Frame):
        # self.stop_words = set(stopwords.words("english"))
  
     def createWidgets(self):
-        self.systemState = 0
+        self.systemState = 1
+        self.denyDict = {}
 
         self.inputText = Label(self)
         self.inputText["text"] = "Input:"
@@ -48,22 +49,33 @@ class GUIDemo(Frame):
         self.displayText.grid(row=5, column=0, columnspan=7)
 
     def inputWord(self):
-        print 'systemState = ' + str(self.systemState)
+        self.systemState = 1
         self.inputField.delete(0, 'end')
         self.outputField.delete(0, 'end')
         self.new["command"] = self.inputWord
         self.displayText["text"] = "Listening, please speak."
         self.userinput = getSpeech()#self.inputField.get()
+
+        #if self.userinput
+
+
+        for term in self.denyDict:
+            print term
+
         if self.userinput == "":
             self.displayText["text"] = "Please speak again."
         elif ('謝謝' in self.userinput) or ('關掉' in self.userinput) or ('關閉' in self.userinput) or ('關機' in self.userinput):
             self.displayText["text"] = "You're welcomed. See you next time!"
             sys.exit()
         else:
-            self.result = getTag_Location(self.userinput)
+            if ('一家' in self.userinput) or ('一個' in self.userinput) or ('能吃的' in self.userinput) or ('什麼都好' in self.userinput):
+                self.systemState = 2
+            self.resultOutput = getTag_Location(self.userinput, self.systemState, self.denyDict)
+            self.denyDict = self.resultOutput[2]
+            self.systemState = self.resultOutput[3]
             self.inputField.insert(0, self.userinput)
-            self.outputField.insert(0, self.result)
-            self.displayText["text"] = "Get your sentence."
+            self.outputField.insert(0, self.resultOutput[0])
+            self.displayText["text"] = self.resultOutput[1]
 
 
 def getSpeech():
@@ -87,7 +99,8 @@ def getSpeech():
 
                 # we need some special handling here to correctly print unicode characters to standard output
                 if str is bytes: # this version of Python uses bytes for strings (Python 2)
-                    print(u"You said {}".format(value).encode("big5"))  # encode big5 for show on Windows Console
+                    #print(u"You said {}".format(value).encode("big5"))  # encode big5 for show on Windows Console
+                    print(u"You said {}".format(value))  # encode big5 for show on Windows Console
                     c = value.encode("utf-8")
                     f.write(c)  # write in a file
                     return c
@@ -102,30 +115,74 @@ def getSpeech():
     except KeyboardInterrupt:
         pass
         
-def getTag_Location(sentence):
+def getTag_Location(sentence, systemState, denyDict):
+    print 'systemState = ' + str(systemState)
     tags = {}
+    infile = open('yelp_tags_data.txt', 'r')
+    for line in infile:
+        if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue
+        linearr = line.strip('\n').strip('\r\n').split(':')
+        linearr[1] = linearr[1].split(',')
+        if linearr[1][0] == '': linearr[1] = []
+        tags.update({linearr[0]:linearr[1]})
+    infile.close()
 
     position_detected_keywords_front = []
     position_detected_keywords_back = []
-    infile = open('position_detected_keywords', 'r')
-    inData = infile.readlines()
+    infile = open('position_detected_keywords.txt', 'r')
+    while 1:
+        line = infile.readline()
+        if line[0] == '#' or not line: break
+        position_detected_keywords_front.append(line.strip('\n').strip('\r\n'))
+    while 1:
+        line = infile.readline()
+        if not line: break
+        position_detected_keywords_back.append(line.strip('\n').strip('\r\n'))
     infile.close()
-    backFlag = 0
-    for keyword in inData:
-        if keyword[0] == '#':
-            backFlag = 1
-        elif backFlag == 0:
-            position_detected_keywords_front += [keyword]
-        else:
-            position_detected_keywords_back += [keyword]
+ 
+    position_keywords = {} #location dictionary, seems not work
+    infile = open('taipeiLocationDict.txt', 'r')
+    for line in infile:
+        if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue
+        linearr = line.strip('\n').strip('\r\n').split(':')
+        linearr[1] = linearr[1].split(',')
+        if linearr[1][0] == '': linearr[1] = []
+        position_keywords.update({linearr[0]:linearr[1]})
+    infile.close()
+
+    collected_tags = []
+
+    #sentence = raw_input("Input a sentence: ").decode(sys.stdin.encoding).encode('utf8')
+    #sentence = sentence2.decode('utf8').encode(sys.stdin.encoding)
 
     # find yelp tag in sentence
-    print sentence.decode('utf-8').encode('big5')
-    #[i for i,x in enumerate(testlist) if x == 1]
-    #u'的'.
+    if systemState == 1: # 1 for already know what to eat
+        for tag, keywords in tags.items():
+            for keyword in keywords:
+                if keyword in sentence: # get only the first one keyword
+                    keyword_pos = sentence.index(keyword)
+                    # if chinese 'no' in sentence no far before the keyword
+                    if '不' in sentence[keyword_pos-9:keyword_pos]:
+                        denyDict[tag] = 1.0
+                        print ('Detect 不 + ' + keyword).decode('utf8').encode('big5')
+                    else:
+                        collected_tags.append(tag)
+                    break
+    elif systemState == 2:  # 2 for don't know what to eat
+        collected_tags.append('餐廳')
 
+    collected_tags
+    #for item in collected_tags:
+        #for item2 in item:
+            #print item2.decode('utf8').encode('big5')
 
+    # find position base on keyword
     position = ''
+    for p, keywords in position_keywords.items():
+        for keyword in keywords:
+            if keyword in sentence:
+                position = p
+                break
     if position == '':
         # find position in sentence. detect keyword, and posseg sentence before the keyword, using nearest n or ns as position
         for keyword in position_detected_keywords_front:
@@ -135,7 +192,8 @@ def getTag_Location(sentence):
                 for word, tag in list(reversed(list(words))):
                     word = word.encode('utf8')
                     tag = tag.encode('utf8')
-                    if tag != 'n' and tag != 'ns':
+                    print word.decode('utf-8').encode('big5'), tag.decode('utf-8').encode('big5')
+                    if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
                         break
                     position = word + position
         if position == '':
@@ -147,28 +205,52 @@ def getTag_Location(sentence):
                     for word, tag in list(words):
                         word = word.encode('utf8')
                         tag = tag.encode('utf8')
-                        if tag != 'n' and tag != 'ns':
+                        print word.decode('utf-8').encode('big5'), tag.decode('utf-8').encode('big5')
+                        if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
                             break
                         position = position + word
 
-    
+    print position.decode('utf8').encode('big5')
+
+    collected_tags.append(position)
+
+    for item in collected_tags:
+        print item.decode('utf8').encode('big5')
+
+    print ('Tag: ' + collected_tags[0]).decode('utf8').encode('big5')
+    print ('Location: ' + collected_tags[1]).decode('utf8').encode('big5')
+
     api_calls = []
     print ('Try to get the position of ' + position).decode('utf8').encode('big5')
     geo = GetGeocode(position)
     print 'Get GeoCode: ' + str(geo[0]) + ' ' + str(geo[1])
-    param = get_search_parameters(geo[0], geo[1], '義大利菜')
+    param = get_search_parameters(geo[0], geo[1], collected_tags[0])
     api_calls.append(get_results(param))
     jsonFromYelp = json.dumps(api_calls)
     time.sleep(1.0)
     restaurantData = json.loads(jsonFromYelp)
-    print len(restaurantData[0])
+    print len(restaurantData[0]["businesses"])
     outputRestaurant = []
-    for item in restaurantData:
-        for oneData in item["businesses"]:
-            print oneData["name"]
-            outputRestaurant.append(oneData["name"]) 
 
-    return outputRestaurant
+    for oneData in restaurantData[0]["businesses"]:
+        print oneData["name"]
+        print oneData["location"]["address"]
+        #outputRestaurant.append(oneData["name"]) 
+ 
+    if (systemState == 1) or (systemState == 2):
+        responseSentence = ('我認為'.decode('utf-8') + restaurantData[0]["businesses"][0]["name"] + '是個不錯個選擇，需要啟動導航嗎？'.decode('utf-8'))
+        address = restaurantData[0]["businesses"][0]["location"]["address"]
+        systemState = 3
+
+    #elif systemState == 3
+    #print responseSentence
+     
+
+
+
+
+
+    return responseSentence, address, denyDict, systemState
 
 def GetGeocode(location):
     url = "https://maps.googleapis.com/maps/api/geocode/json?address="
@@ -205,13 +287,13 @@ def get_results(params):
 
     return data
 
-def get_search_parameters(inLat, inLong, iterm):
+def get_search_parameters(inLat, inLong, inTerm):
     #See the Yelp API for more details
     #print iterm.encode('big5')
     params = {}
     params["cc"] = "TW"
     params["lang"] = "zh-tw"
-    params["term"] = iterm 
+    params["term"] = inTerm
     params["ll"] = "{},{}".format(str(inLat),str(inLong))
     #params["location"] = "羅斯福路"
     params["radius_filter"] = "1000"
