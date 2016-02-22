@@ -8,51 +8,54 @@ import rauth
 import time
 import json
 import urllib
-#from nltk.corpus import stopwords
-#from nltk.tokenize import word_tokenize
 
-class GUIDemo(Frame):
+class iKnowMainWindow(Frame):   # Main UI interacting with user
     def __init__(self, master=None):
         Frame.__init__(self, master)
         self.grid()
-        self.createWidgets()
+        self.createWidgets()    # Draw all components onto the window
         self.userinput = ""
         self.result = ""
         self.word = ""
-       # self.stop_words = set(stopwords.words("english"))
  
     def createWidgets(self):
         self.systemState = 1
         self.denyDict = {}
 
-        self.inputText = Label(self)
+        self.inputText = Label(self)    # Draw input label and entrybox
         self.inputText["text"] = "Input:"
         self.inputText.grid(row=0, column=0)
         self.inputField = Entry(self)
         self.inputField["width"] = 50
         self.inputField.grid(row=0, column=1, columnspan=6)
  
-        self.outputText = Label(self)
+        self.outputText = Label(self)   # Draw output label and entrybox
         self.outputText["text"] = "Output:"
         self.outputText.grid(row=2, column=0)
         self.outputField = Entry(self)
         self.outputField["width"] = 50
         self.outputField.grid(row=2, column=1, columnspan=6)
          
-        self.new = Button(self)
+        self.new = Button(self)         # Draw the control button
         self.new["text"] = "Start"
         self.new.grid(row=4, column=3)
-        self.new["command"] = self.inputWord
+        self.new["command"] = self.letsGo
+        #self.new["command"] = self.inputWord
+        print "Test line (createWidgets)"
         
-        self.displayText = Label(self)
+        self.displayText = Label(self)  # Draw the displaying label benethe the control button
         self.displayText["text"] = "iKnow: a Context-Aware Recommender System"
         self.displayText.grid(row=5, column=0, columnspan=7)
+
+    def letsGo(self):
+        print "Test line (letsGo)"
+        self.inputWord()
 
     def inputWord(self):
         self.systemState = 1
         self.inputField.delete(0, 'end')
         self.outputField.delete(0, 'end')
-        self.new["command"] = self.inputWord
+        #self.new["command"] = self.inputWord
         self.displayText["text"] = "Listening, please speak."
         self.userinput = getSpeech()#self.inputField.get()
 
@@ -79,8 +82,6 @@ class GUIDemo(Frame):
 
 
 def getSpeech():
-    f = open("speech.txt", "w")
-
     r = sr.Recognizer()
     m = sr.Microphone()
 
@@ -102,7 +103,6 @@ def getSpeech():
                     #print(u"You said {}".format(value).encode("big5"))  # encode big5 for show on Windows Console
                     print(u"You said {}".format(value))  # encode big5 for show on Windows Console
                     c = value.encode("utf-8")
-                    f.write(c)  # write in a file
                     return c
                 else: # this version of Python uses unicode for strings (Python 3+)
                     print("You said {}".format(value))
@@ -305,5 +305,5 @@ def get_search_parameters(inLat, inLong, inTerm):
  
 if __name__ == '__main__':
     root = Tk()
-    app = GUIDemo(master=root)
-    app.mainloop()
+    iKnow_Tk = iKnowMainWindow(master=root)
+    iKnow_Tk.mainloop()
