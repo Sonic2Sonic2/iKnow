@@ -1,4 +1,6 @@
 # -*- coding: utf8 -*-
+import dictionary_manipulate as dm
+
 from Tkinter import *
 import speech_recognition as sr
 import jieba.posseg as pseg
@@ -13,15 +15,14 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
     def __init__(self, master=None):
         Frame.__init__(self, master)
         self.grid()
-        self.createWidgets()    # Draw all components onto the window
+
+        self.systemState = 1
         self.userinput = ""
-        self.result = ""
-        self.word = ""
+
+        self.createWidgets()    # [function] Draw all components onto the window
+        self.knowledgeInit()    # [function] initialize all knowledge bases
  
     def createWidgets(self):
-        self.systemState = 1
-        self.denyDict = {}
-
         self.inputText = Label(self)    # Draw input label and entrybox
         self.inputText["text"] = "Input:"
         self.inputText.grid(row=0, column=0)
@@ -36,28 +37,32 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
         self.outputField["width"] = 50
         self.outputField.grid(row=2, column=1, columnspan=6)
          
-        self.new = Button(self)         # Draw the control button
-        self.new["text"] = "Start"
-        self.new.grid(row=4, column=3)
-        self.new["command"] = self.letsGo
-        #self.new["command"] = self.inputWord
-        print "Test line (createWidgets)"
-        
+        self.theButton = Button(self)         # Draw the control button
+        self.theButton["text"] = "Start"
+        self.theButton.grid(row=4, column=3)
+        self.theButton["command"] = self.pushButton
+
         self.displayText = Label(self)  # Draw the displaying label benethe the control button
         self.displayText["text"] = "iKnow: a Context-Aware Recommender System"
         self.displayText.grid(row=5, column=0, columnspan=7)
 
-    def letsGo(self):
-        print "Test line (letsGo)"
+    def knowledgeInit(self):
+        print "Loading knowledge bases."
+        self.denyDict = {}
+        self.shutDownKeyword = dm.loadDictionary("shutDownKeyword.txt")
+        self.randomKeyword = dm.loadDictionary("randomKeyword.txt")
+
+    def pushButton(self):
+        print "Get in the control button."
         self.inputWord()
 
     def inputWord(self):
         self.systemState = 1
         self.inputField.delete(0, 'end')
         self.outputField.delete(0, 'end')
-        #self.new["command"] = self.inputWord
         self.displayText["text"] = "Listening, please speak."
-        self.userinput = getSpeech()#self.inputField.get()
+        self.userinput = getSpeech()
+        #self.userinput = getSpeechDev()
 
         #if self.userinput
 
@@ -67,7 +72,7 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
 
         if self.userinput == "":
             self.displayText["text"] = "Please speak again."
-        elif ('謝謝' in self.userinput) or ('關掉' in self.userinput) or ('關閉' in self.userinput) or ('關機' in self.userinput):
+        elif ('關掉' in self.userinput) or ('關閉' in self.userinput) or ('關機' in self.userinput):
             self.displayText["text"] = "You're welcomed. See you next time!"
             sys.exit()
         else:
@@ -80,8 +85,12 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
             self.outputField.insert(0, self.resultOutput[0])
             self.displayText["text"] = self.resultOutput[1]
 
+def getSpeechDev():
+    dev_test_utt = "測試句：請幫我找台大附近的牛肉麵"
+    print dev_test_utt
+    return dev_test_utt
 
-def getSpeech():
+def getSpeech():    # see https://pypi.python.org/pypi/SpeechRecognition/
     r = sr.Recognizer()
     m = sr.Microphone()
 
@@ -245,10 +254,6 @@ def getTag_Location(sentence, systemState, denyDict):
     #elif systemState == 3
     #print responseSentence
      
-
-
-
-
 
     return responseSentence, address, denyDict, systemState
 
