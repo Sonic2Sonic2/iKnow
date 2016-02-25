@@ -16,11 +16,11 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
         Frame.__init__(self, master)
         self.grid()
 
-        self.systemState = 1
-        self.userinput = ""
+        self.systemState = 1    # [variable] store the state of the system. Default is 1 (1st result)
+        self.user_say = ""      # [variable] store what user said (from speech to text component)
 
         self.createWidgets()    # [function] Draw all components onto the window
-        self.knowledgeInit()    # [function] initialize all knowledge bases
+        self.knowledgeInit()    # [function] Initialize all knowledge bases
  
     def createWidgets(self):
         self.inputText = Label(self)    # Draw input label and entrybox
@@ -40,57 +40,70 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
         self.theButton = Button(self)         # Draw the control button
         self.theButton["text"] = "Start"
         self.theButton.grid(row=4, column=3)
-        self.theButton["command"] = self.pushButton
+        self.theButton["command"] = self.pushButtonAndGetToWork
 
         self.displayText = Label(self)  # Draw the displaying label benethe the control button
         self.displayText["text"] = "iKnow: a Context-Aware Recommender System"
         self.displayText.grid(row=5, column=0, columnspan=7)
+        return 0
 
     def knowledgeInit(self):
         print "Loading knowledge bases."
         self.denyDict = {}
         self.shutDownKeyword = dm.loadDictionary("shutDownKeyword.txt")
         self.randomKeyword = dm.loadDictionary("randomKeyword.txt")
+        return 0
 
-    def pushButton(self):
-        print "Get in the control button."
-        self.inputWord()
+    def pushButtonAndGetToWork(self):
+        print "push button!"
+        self.inputField.delete(0, 'end')    # clear inputField
+        self.outputField.delete(0, 'end')   # clear outputField
 
-    def inputWord(self):
-        self.systemState = 1
-        self.inputField.delete(0, 'end')
-        self.outputField.delete(0, 'end')
-        self.displayText["text"] = "Listening, please speak."
-        self.userinput = getSpeech()
-        #self.userinput = getSpeechDev()
+        self.user_say = getSpeechThenToTextDev()    # Get speech and also do speech to text
+        self.NLUnderstanding()                      # Do natural language understanding
+        self.readyForAction()                       # Ready for action
+        return 0
 
-        #if self.userinput
+    def NLUnderstanding(self):
+        self.inputField.insert(0, self.user_say)    # Show what user say
 
+        for shutDownterm in self.shutDownKeyword:   # Shut down detected
+            if shutDownterm in self.user_say:
+                systemState = -1
+                return
 
-        for term in self.denyDict:
-            print term
+        systemState = 11    # Anyway, put to state 1-1 for testing
 
-        if self.userinput == "":
-            self.displayText["text"] = "Please speak again."
-        elif ('關掉' in self.userinput) or ('關閉' in self.userinput) or ('關機' in self.userinput):
-            self.displayText["text"] = "You're welcomed. See you next time!"
+        return 0 
+
+    def readyForAction(self):
+        if self.systemState == -1:   # -1: shut down
             sys.exit()
-        else:
-            if ('一家' in self.userinput) or ('一個' in self.userinput) or ('能吃的' in self.userinput) or ('什麼都好' in self.userinput):
-                self.systemState = 2
-            self.resultOutput = getTag_Location(self.userinput, self.systemState, self.denyDict)
+
+        elif self.systemState == 11: # 11:
+            self.resultOutput = getTag_Location(self.user_say, self.systemState, self.denyDict)
             self.denyDict = self.resultOutput[2]
             self.systemState = self.resultOutput[3]
-            self.inputField.insert(0, self.userinput)
+
             self.outputField.insert(0, self.resultOutput[0])
             self.displayText["text"] = self.resultOutput[1]
+            return 0
 
-def getSpeechDev():
+        elif self.systemState == 12: # 12:
+            pass
+            return 0
+
+        else:
+            print "異常狀況：請檢查 systemState 是否有遺漏"
+            return -1
+
+
+def getSpeechThenToTextDev(): # for silent testing while developing (kill this function when it's no use)
     dev_test_utt = "測試句：請幫我找台大附近的牛肉麵"
     print dev_test_utt
     return dev_test_utt
 
-def getSpeech():    # see https://pypi.python.org/pypi/SpeechRecognition/
+def getSpeechThenToText():    # see https://pypi.python.org/pypi/SpeechRecognition/ for detail
     r = sr.Recognizer()
     m = sr.Microphone()
 
@@ -103,23 +116,22 @@ def getSpeech():    # see https://pypi.python.org/pypi/SpeechRecognition/
             print("Say something!")
             audio = r.listen(source)
             print("Got it! Now to recognize it...")
-            try:
-                # recognize speech using Google Speech Recognition
+            try: # recognize speech using Google Speech Recognition
                 value = r.recognize_google(audio, language = "zh-TW")
 
                 # we need some special handling here to correctly print unicode characters to standard output
                 if str is bytes: # this version of Python uses bytes for strings (Python 2)
-                    #print(u"You said {}".format(value).encode("big5"))  # encode big5 for show on Windows Console
-                    print(u"You said {}".format(value))  # encode big5 for show on Windows Console
+                    #print(u"You said {}".format(value).encode("big5"))  # encode big5 for show on Windows Console, 之後再處理
+                    print(u"You said {}".format(value))
                     c = value.encode("utf-8")
                     return c
                 else: # this version of Python uses unicode for strings (Python 3+)
                     print("You said {}".format(value))
                     c = ""
                     return c
-            except sr.UnknownValueError:
+            except sr.UnknownValueError:    # value error (not a recogizable utterance)
                 print("Oops! Didn't catch that")
-            except sr.RequestError as e:
+            except sr.RequestError as e:    # service unavailable
                 print("Uh oh! Couldn't request results from Google Speech Recognition service; {0}".format(e))
     except KeyboardInterrupt:
         pass
@@ -234,7 +246,7 @@ def getTag_Location(sentence, systemState, denyDict):
     geo = GetGeocode(position)
     print 'Get GeoCode: ' + str(geo[0]) + ' ' + str(geo[1])
     param = get_search_parameters(geo[0], geo[1], collected_tags[0])
-    api_calls.append(get_results(param))
+    api_calls.append( getYelpResults(param) )
     jsonFromYelp = json.dumps(api_calls)
     time.sleep(1.0)
     restaurantData = json.loads(jsonFromYelp)
@@ -251,10 +263,6 @@ def getTag_Location(sentence, systemState, denyDict):
         address = restaurantData[0]["businesses"][0]["location"]["address"]
         systemState = 3
 
-    #elif systemState == 3
-    #print responseSentence
-     
-
     return responseSentence, address, denyDict, systemState
 
 def GetGeocode(location):
@@ -270,7 +278,7 @@ def GetGeocode(location):
     k.append(name_item["geometry"]["location"]["lng"])
     return k
  
-def get_results(params):
+def getYelpResults(params):
 
     #Obtain these from Yelp's manage access page
     consumer_key = "zL6GUBjcMjK8xFsGhmirmg"
@@ -307,7 +315,6 @@ def get_search_parameters(inLat, inLong, inTerm):
 
     return params
 
- 
 if __name__ == '__main__':
     root = Tk()
     iKnow_Tk = iKnowMainWindow(master=root)
