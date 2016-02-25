@@ -72,7 +72,7 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
                 systemState = -1
                 return
 
-        systemState = 11    # Anyway, put to state 1-1 for testing
+        self.systemState = 11    # Anyway, put to state 1-1 for testing
 
         return 0 
 
@@ -81,9 +81,8 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
             sys.exit()
 
         elif self.systemState == 11: # 11:
-            self.resultOutput = getTag_Location(self.user_say, self.systemState, self.denyDict)
+            self.resultOutput = getTag_Location(self.user_say, self.denyDict)
             self.denyDict = self.resultOutput[2]
-            self.systemState = self.resultOutput[3]
 
             self.outputField.insert(0, self.resultOutput[0])
             self.displayText["text"] = self.resultOutput[1]
@@ -122,11 +121,11 @@ def getSpeechThenToText():    # see https://pypi.python.org/pypi/SpeechRecogniti
                 # we need some special handling here to correctly print unicode characters to standard output
                 if str is bytes: # this version of Python uses bytes for strings (Python 2)
                     #print(u"You said {}".format(value).encode("big5"))  # encode big5 for show on Windows Console, 之後再處理
-                    print(u"You said {}".format(value))
+                    print( u"You said {}".format(value) )
                     c = value.encode("utf-8")
                     return c
                 else: # this version of Python uses unicode for strings (Python 3+)
-                    print("You said {}".format(value))
+                    print( "You said {}".format(value) )
                     c = ""
                     return c
             except sr.UnknownValueError:    # value error (not a recogizable utterance)
@@ -135,9 +134,8 @@ def getSpeechThenToText():    # see https://pypi.python.org/pypi/SpeechRecogniti
                 print("Uh oh! Couldn't request results from Google Speech Recognition service; {0}".format(e))
     except KeyboardInterrupt:
         pass
-        
-def getTag_Location(sentence, systemState, denyDict):
-    print 'systemState = ' + str(systemState)
+
+def getTag_Location(sentence, denyDict):
     tags = {}
     infile = open('yelp_tags_data.txt', 'r')
     for line in infile:
@@ -173,26 +171,22 @@ def getTag_Location(sentence, systemState, denyDict):
 
     collected_tags = []
 
-    #sentence = raw_input("Input a sentence: ").decode(sys.stdin.encoding).encode('utf8')
-    #sentence = sentence2.decode('utf8').encode(sys.stdin.encoding)
-
     # find yelp tag in sentence
-    if systemState == 1: # 1 for already know what to eat
-        for tag, keywords in tags.items():
-            for keyword in keywords:
-                if keyword in sentence: # get only the first one keyword
-                    keyword_pos = sentence.index(keyword)
-                    # if chinese 'no' in sentence no far before the keyword
-                    if '不' in sentence[keyword_pos-9:keyword_pos]:
-                        denyDict[tag] = 1.0
-                        print ('Detect 不 + ' + keyword).decode('utf8').encode('big5')
-                    else:
-                        collected_tags.append(tag)
-                    break
-    elif systemState == 2:  # 2 for don't know what to eat
-        collected_tags.append('餐廳')
+    for tag, keywords in tags.items():
+        for keyword in keywords:
+            if keyword in sentence: # get only the first one keyword
+                keyword_pos = sentence.index(keyword)
+                # if chinese 'no' in sentence no far before the keyword
+                if '不' in sentence[keyword_pos-9:keyword_pos]:
+                    denyDict[tag] = 1.0
+                    print ('Detect 不 + ' + keyword).decode('utf8').encode('big5')
+                else:
+                    collected_tags.append(tag)
+                break
 
-    collected_tags
+    collected_tags.append('餐廳')
+    print "getTag_Location 檢查點"
+    print collected_tags
     #for item in collected_tags:
         #for item2 in item:
             #print item2.decode('utf8').encode('big5')
@@ -257,13 +251,11 @@ def getTag_Location(sentence, systemState, denyDict):
         print oneData["name"]
         print oneData["location"]["address"]
         #outputRestaurant.append(oneData["name"]) 
- 
-    if (systemState == 1) or (systemState == 2):
-        responseSentence = ('我認為'.decode('utf-8') + restaurantData[0]["businesses"][0]["name"] + '是個不錯個選擇，需要啟動導航嗎？'.decode('utf-8'))
-        address = restaurantData[0]["businesses"][0]["location"]["address"]
-        systemState = 3
 
-    return responseSentence, address, denyDict, systemState
+    responseSentence = ( '最高分回傳：'.decode('utf-8') + restaurantData[0]["businesses"][0]["name"] )
+    address = restaurantData[0]["businesses"][0]["location"]["address"]
+
+    return responseSentence, address, denyDict
 
 def GetGeocode(location):
     url = "https://maps.googleapis.com/maps/api/geocode/json?address="
