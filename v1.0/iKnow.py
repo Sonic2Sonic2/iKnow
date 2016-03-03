@@ -72,7 +72,9 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
                 systemState = -1
                 return
 
-        self.systemState = 11    # Anyway, put to state 1-1 for testing
+        
+
+        #self.systemState = 11    # Anyway, put to state 1-1 for testing
 
         return 0 
 
@@ -179,7 +181,7 @@ def getTag_Location(sentence, denyDict):
                 # if chinese 'no' in sentence no far before the keyword
                 if '不' in sentence[keyword_pos-9:keyword_pos]:
                     denyDict[tag] = 1.0
-                    print ('Detect 不 + ' + keyword).decode('utf8').encode('big5')
+                    print ('Detect 不 + ' + keyword).decode('utf8')
                 else:
                     collected_tags.append(tag)
                 break
@@ -206,8 +208,8 @@ def getTag_Location(sentence, denyDict):
                 words = pseg.cut(sub_sentence)
                 for word, tag in list(reversed(list(words))):
                     word = word.encode('utf8')
-                    tag = tag.encode('utf8')
-                    print word.decode('utf-8').encode('big5'), tag.decode('utf-8').encode('big5')
+                    tag = tag.encode('utf8')    # the word tag given from jieba
+                    print word.decode('utf-8'), tag.decode('utf-8')
                     if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
                         break
                     position = word + position
@@ -220,12 +222,12 @@ def getTag_Location(sentence, denyDict):
                     for word, tag in list(words):
                         word = word.encode('utf8')
                         tag = tag.encode('utf8')
-                        print word.decode('utf-8').encode('big5'), tag.decode('utf-8').encode('big5')
+                        print word.decode('utf-8').encode('big5'), tag.decode('utf-8')
                         if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
                             break
                         position = position + word
 
-    print position.decode('utf8').encode('big5')
+    print position.decode('utf8')
 
     collected_tags.append(position)
 
@@ -247,10 +249,10 @@ def getTag_Location(sentence, denyDict):
     print len(restaurantData[0]["businesses"])
     outputRestaurant = []
 
-    for oneData in restaurantData[0]["businesses"]:
+    for oneData in restaurantData[0]["businesses"]:     # output (10) result from yelp on console
         print oneData["name"]
         print oneData["location"]["address"]
-        #outputRestaurant.append(oneData["name"]) 
+        #outputRestaurant.append(oneData["name"])
 
     responseSentence = ( '最高分回傳：'.decode('utf-8') + restaurantData[0]["businesses"][0]["name"] )
     address = restaurantData[0]["businesses"][0]["location"]["address"]
@@ -260,7 +262,7 @@ def getTag_Location(sentence, denyDict):
 def GetGeocode(location):
     url = "https://maps.googleapis.com/maps/api/geocode/json?address="
     key = "&key=AIzaSyDU0SvmkoV9K_hm5xqDM39_-acX5HF7IW4"
-    location = "台灣" + location
+    location = "台灣 " + location
     googleapi_loca = url+location+key
     f = urllib.urlopen(googleapi_loca)
     items2 = json.loads(f.read())
