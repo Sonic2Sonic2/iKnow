@@ -60,11 +60,11 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
         self.outputField.delete(0, 'end')   # clear outputField
 
         self.user_say = getSpeechThenToTextDev()    # Get speech and also do speech to text
-        self.NLUnderstanding()                      # Do natural language understanding
+        self.understanding()                        # Do natural language understanding
         self.readyForAction()                       # Ready for action
         return 0
 
-    def NLUnderstanding(self):
+    def understanding(self):
         self.inputField.insert(0, self.user_say)    # Show what user say
 
         for shutDownterm in self.shutDownKeyword:   # Shut down detected
@@ -74,7 +74,7 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
 
         
 
-        #self.systemState = 11    # Anyway, put to state 1-1 for testing
+        self.systemState = 11   # Anyway, put to state 1-1 for testing
 
         return 0 
 
@@ -100,7 +100,7 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
 
 
 def getSpeechThenToTextDev(): # for silent testing while developing (kill this function when it's no use)
-    dev_test_utt = "測試句：請幫我找台大附近的牛肉麵"
+    dev_test_utt = "測試句：請幫我找台大附近的素食"
     print dev_test_utt
     return dev_test_utt
 
@@ -252,6 +252,9 @@ def getTag_Location(sentence, denyDict):
     for oneData in restaurantData[0]["businesses"]:     # output (10) result from yelp on console
         print oneData["name"]
         print oneData["location"]["address"]
+        print oneData["snippet_text"]
+        print oneData["distance"]
+        print oneData["rating"]
         #outputRestaurant.append(oneData["name"])
 
     responseSentence = ( '最高分回傳：'.decode('utf-8') + restaurantData[0]["businesses"][0]["name"] )
@@ -295,17 +298,18 @@ def getYelpResults(params):
     return data
 
 def get_search_parameters(inLat, inLong, inTerm):
+
     #See the Yelp API for more details
-    #print iterm.encode('big5')
     params = {}
-    params["cc"] = "TW"
-    params["lang"] = "zh-tw"
     params["term"] = inTerm
-    params["ll"] = "{},{}".format(str(inLat),str(inLong))
-    #params["location"] = "羅斯福路"
-    params["radius_filter"] = "1000"
-    params["limit"] = "10"
+    params["limit"] = 2
+    #params["offset"] = 1
+    #params["sort"] = 1
     #params["category_filter"] = "italian"
+    params["radius_filter"] = 2000
+
+    ll = str(inLat) + ',' + str(inLong)
+    params["ll"] = ll
 
     return params
 
