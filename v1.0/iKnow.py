@@ -100,7 +100,7 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
 
 
 def getSpeechThenToTextDev(): # for silent testing while developing (kill this function when it's no use)
-    dev_test_utt = "測試句：請幫我找台大附近的素食"
+    dev_test_utt = "測試句：請幫我找台大附近的咖啡"
     print dev_test_utt
     return dev_test_utt
 
@@ -252,9 +252,10 @@ def getTag_Location(sentence, denyDict):
     for oneData in restaurantData[0]["businesses"]:     # output (10) result from yelp on console
         print oneData["name"]
         print oneData["location"]["address"]
-        print oneData["snippet_text"]
+        print oneData["is_claimed"]
+        print oneData["is_closed"]
+        #print oneData["categories"]
         print oneData["distance"]
-        print oneData["rating"]
         #outputRestaurant.append(oneData["name"])
 
     responseSentence = ( '最高分回傳：'.decode('utf-8') + restaurantData[0]["businesses"][0]["name"] )
@@ -302,14 +303,16 @@ def get_search_parameters(inLat, inLong, inTerm):
     #See the Yelp API for more details
     params = {}
     params["term"] = inTerm
-    params["limit"] = 2
-    #params["offset"] = 1
+    #params["limit"] = 20
+    #params["offset"] = 100
     #params["sort"] = 1
     #params["category_filter"] = "italian"
-    params["radius_filter"] = 2000
+    params["radius_filter"] = 1000
 
-    ll = str(inLat) + ',' + str(inLong)
-    params["ll"] = ll
+    coordinateToYelp = str(inLat) + ',' + str(inLong)
+    params["ll"] = coordinateToYelp
+
+    params["cc"] = "TW"
 
     return params
 
