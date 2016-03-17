@@ -100,7 +100,7 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
 
 
 def getSpeechThenToTextDev(): # for silent testing while developing (kill this function when it's no use)
-    dev_test_utt = "測試句：請幫我找台大附近的咖啡"
+    dev_test_utt = "測試句：請幫我找台大附近的麵"
     print dev_test_utt
     return dev_test_utt
 
@@ -138,14 +138,14 @@ def getSpeechThenToText():    # see https://pypi.python.org/pypi/SpeechRecogniti
         pass
 
 def getTag_Location(sentence, denyDict):
-    tags = {}
-    infile = open('yelp_tags_data.txt', 'r')
-    for line in infile:
-        if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue
-        linearr = line.strip('\n').strip('\r\n').split(':')
-        linearr[1] = linearr[1].split(',')
-        if linearr[1][0] == '': linearr[1] = []
-        tags.update({linearr[0]:linearr[1]})
+    tags = {}   # tags is a dictionary for storing tag
+    infile = open('yelp_tags_data.txt', 'r')    # input
+    for line in infile: # read
+        if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue # if # or nothing --> skip
+        linearr = line.strip('\n').strip('\r\n').split(':') # split tag and synonyms by ':'
+        linearr[1] = linearr[1].split(',')  # the synonyms are split into a list by ','
+        if linearr[1][0] == '': linearr[1] = [] # if the there is nothing bu '' in the synonym list, replace it by a null list
+        tags.update({linearr[0]:linearr[1]})    # add an object into tags dictionary: key = tag, and value = the synonym list
     infile.close()
 
     position_detected_keywords_front = []
@@ -189,9 +189,6 @@ def getTag_Location(sentence, denyDict):
     collected_tags.append('餐廳')
     print "getTag_Location 檢查點"
     print collected_tags
-    #for item in collected_tags:
-        #for item2 in item:
-            #print item2.decode('utf8').encode('big5')
 
     # find position base on keyword
     position = ''
@@ -232,14 +229,17 @@ def getTag_Location(sentence, denyDict):
     collected_tags.append(position)
 
     for item in collected_tags:
-        print item.decode('utf8').encode('big5')
+        print item
 
-    print ('Tag: ' + collected_tags[0]).decode('utf8').encode('big5')
-    print ('Location: ' + collected_tags[1]).decode('utf8').encode('big5')
+    print ('Tag: ' + collected_tags[0])
+    print ('Location: ' + collected_tags[1])
 
     api_calls = []
-    print ('Try to get the position of ' + position).decode('utf8').encode('big5')
+    print ('Try to get the position of ' + position)
     geo = GetGeocode(position)
+#==================================================
+#    geo = [25.019477, 121.541257]   # NTU backdoor
+#==================================================
     print 'Get GeoCode: ' + str(geo[0]) + ' ' + str(geo[1])
     param = get_search_parameters(geo[0], geo[1], collected_tags[0])
     api_calls.append( getYelpResults(param) )
@@ -252,8 +252,6 @@ def getTag_Location(sentence, denyDict):
     for oneData in restaurantData[0]["businesses"]:     # output (10) result from yelp on console
         print oneData["name"]
         print oneData["location"]["address"]
-        print oneData["is_claimed"]
-        print oneData["is_closed"]
         #print oneData["categories"]
         print oneData["distance"]
         #outputRestaurant.append(oneData["name"])
@@ -303,11 +301,12 @@ def get_search_parameters(inLat, inLong, inTerm):
     #See the Yelp API for more details
     params = {}
     params["term"] = inTerm
-    #params["limit"] = 20
+    #params["limit"] = 1
     #params["offset"] = 100
     #params["sort"] = 1
-    #params["category_filter"] = "italian"
+    params["category_filter"] = "italian,japanese"
     params["radius_filter"] = 1000
+    params["actionlinks"] = True
 
     coordinateToYelp = str(inLat) + ',' + str(inLong)
     params["ll"] = coordinateToYelp
