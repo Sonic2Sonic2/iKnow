@@ -1,5 +1,5 @@
 # -*- coding: utf8 -*-
-import dictionary_manipulate as dm
+import knowledge_manipulate as km
 
 from Tkinter import *
 import speech_recognition as sr
@@ -49,9 +49,13 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
 
     def knowledgeInit(self):
         print "Loading knowledge bases."
-        self.denyDict = {}
-        self.shutDownKeyword = dm.loadDictionary("shutDownKeyword.txt")
-        self.randomKeyword = dm.loadDictionary("randomKeyword.txt")
+        self.shutDownKeyword = km.loadList("shutDownKeyword.txt")
+        self.randomKeyword = km.loadList("randomKeyword.txt")
+
+        self.category = km.loadDictionary("categoryTW.txt")
+
+        self.positionKeywordFront = km.loadList("positionKeywordFront.txt")
+        self.positionKeywordBack = km.loadList("positionKeywordBack.txt")
         return 0
 
     def pushButtonAndGetToWork(self):
@@ -83,8 +87,7 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
             sys.exit()
 
         elif self.systemState == 11: # 11:
-            self.resultOutput = getTag_Location(self.user_say, self.denyDict)
-            self.denyDict = self.resultOutput[2]
+            self.resultOutput = getTag_Location(self.user_say, self.category)
 
             self.outputField.insert(0, self.resultOutput[0])
             self.displayText["text"] = self.resultOutput[1]
@@ -100,7 +103,7 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
 
 
 def getSpeechThenToTextDev(): # for silent testing while developing (kill this function when it's no use)
-    dev_test_utt = "測試句：請幫我找台大附近的麵"
+    dev_test_utt = "測試句：請幫我找台大附近的義大利麵"
     print dev_test_utt
     return dev_test_utt
 
@@ -137,23 +140,23 @@ def getSpeechThenToText():    # see https://pypi.python.org/pypi/SpeechRecogniti
     except KeyboardInterrupt:
         pass
 
-def getTag_Location(sentence, denyDict):
+def getTag_Location(sentence, categoryDict):
     tags = {}   # tags is a dictionary for storing tag
-    infile = open('yelp_tags_data.txt', 'r')    # input
-    for line in infile: # read
-        if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue # if # or nothing --> skip
-        linearr = line.strip('\n').strip('\r\n').split(':') # split tag and synonyms by ':'
-        linearr[1] = linearr[1].split(',')  # the synonyms are split into a list by ','
-        if linearr[1][0] == '': linearr[1] = [] # if the there is nothing bu '' in the synonym list, replace it by a null list
-        tags.update({linearr[0]:linearr[1]})    # add an object into tags dictionary: key = tag, and value = the synonym list
-    infile.close()
+    #infile = open('yelp_tags_data.txt', 'r')    # input
+    #for line in infile: # read
+        #if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue # if # or nothing --> skip
+        #linearr = line.strip('\n').strip('\r\n').split(':') # split tag and synonyms by ':'
+        #linearr[1] = linearr[1].split(',')  # the synonyms are split into a list by ','
+        #if linearr[1][0] == '': linearr[1] = [] # if the there is nothing bu '' in the synonym list, replace it by a null list
+        #tags.update({linearr[0]:linearr[1]})    # add an object into tags dictionary: key = tag, and value = the synonym list
+    #infile.close()
 
-    position_detected_keywords_front = []
-    position_detected_keywords_back = []
+    position_detected_keywords_front = []   # a list for storing front keywords
+    position_detected_keywords_back = []    # a list for storing back keywords
     infile = open('position_detected_keywords.txt', 'r')
     while 1:
         line = infile.readline()
-        if line[0] == '#' or not line: break
+        if line[0] == '#' or not line: break    # change to back
         position_detected_keywords_front.append(line.strip('\n').strip('\r\n'))
     while 1:
         line = infile.readline()
@@ -174,7 +177,8 @@ def getTag_Location(sentence, denyDict):
     collected_tags = []
 
     # find yelp tag in sentence
-    for tag, keywords in tags.items():
+    denyDict = {}   # ready to remove
+    for tag, keywords in categoryDict.items():
         for keyword in keywords:
             if keyword in sentence: # get only the first one keyword
                 keyword_pos = sentence.index(keyword)
@@ -259,7 +263,7 @@ def getTag_Location(sentence, denyDict):
     responseSentence = ( '最高分回傳：'.decode('utf-8') + restaurantData[0]["businesses"][0]["name"] )
     address = restaurantData[0]["businesses"][0]["location"]["address"]
 
-    return responseSentence, address, denyDict
+    return responseSentence, address
 
 def GetGeocode(location):
     url = "https://maps.googleapis.com/maps/api/geocode/json?address="
