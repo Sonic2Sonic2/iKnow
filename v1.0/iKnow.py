@@ -16,7 +16,7 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
         Frame.__init__(self, master)
         self.grid()
 
-        self.systemState = 1    # [variable] store the state of the system. Default is 1 (1st result)
+        self.system_state = 1    # [variable] store the state of the system. Default is 1 (1st result)
         self.user_say = ""      # [variable] store what user said (from speech to text component)
 
         self.createWidgets()    # [function] Draw all components onto the window
@@ -49,13 +49,8 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
 
     def knowledgeInit(self):
         print "Loading knowledge bases."
-        self.shutDownKeyword = km.loadList("shutDownKeyword.txt")
-        self.randomKeyword = km.loadList("randomKeyword.txt")
-
-        self.category = km.loadDictionary("categoryTW.txt")
-
-        self.positionKeywordFront = km.loadList("positionKeywordFront.txt")
-        self.positionKeywordBack = km.loadList("positionKeywordBack.txt")
+        self.shutdown_keyword = km.loadList("shutdown_keyword.txt")
+        self.randomkeyword = km.loadList("random_keyword.txt")
         return 0
 
     def pushButtonAndGetToWork(self):
@@ -71,39 +66,49 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
     def understanding(self):
         self.inputField.insert(0, self.user_say)    # Show what user say
 
-        for shutDownterm in self.shutDownKeyword:   # Shut down detected
-            if shutDownterm in self.user_say:
-                systemState = -1
+        for shutdown_term in self.shutdown_keyword:   # Shut down detected
+            if shutdown_term in self.user_say:
+                system_state = -1
                 return
 
-        
-
-        self.systemState = 11   # Anyway, put to state 1-1 for testing
+        self.system_state = 11   # Anyway, put to state 1-1 for testing
 
         return 0 
 
     def readyForAction(self):
-        if self.systemState == -1:   # -1: shut down
+        if self.system_state == -1:   # -1: shut down
             sys.exit()
 
-        elif self.systemState == 11: # 11:
-            self.resultOutput = getTag_Location(self.user_say, self.category)
+        elif self.system_state == 11: # 11:
+            self.resultOutput = getTag_Location(self.user_say)
 
             self.outputField.insert(0, self.resultOutput[0])
             self.displayText["text"] = self.resultOutput[1]
+
+            #getLocation(self.user_say)
+            #getTag(self.user_say)
+
             return 0
 
-        elif self.systemState == 12: # 12:
+        elif self.system_state == 12: # 12:
             pass
             return 0
 
         else:
-            print "異常狀況：請檢查 systemState 是否有遺漏"
+            print u"異常狀況：請檢查 system_state 是否有遺漏"
             return -1
 
 
 def getSpeechThenToTextDev(): # for silent testing while developing (kill this function when it's no use)
-    dev_test_utt = "測試句：請幫我找台大附近的義大利麵"
+    dev_test_utt = u"開發測試：請幫我找台大附近的義大利麵"
+    #dev_test_utt = u"開發測試：請幫我找台大附近的義大利麵"  # normal test 
+    #dev_test_utt = u"開發測試：請幫我找一下台大後門附近的義大利麵"  # test loca_dict
+    #dev_test_utt = u"開發測試：台大附近的義大利麵"  # test no location_front
+    #dev_test_utt = u"開發測試：我想吃義大利麵"    # test no location
+    #dev_test_utt = u"開發測試：台大附近的咖哩店"  # test no front
+    #dev_test_utt = u"開發測試：台大附近義大利麵"  # test no front
+    #dev_test_utt = u"開發測試：我想吃迴轉壽司" # test a no-use category
+    #dev_test_utt = u"開發測試：台大附近奶凍捲"   # test no category and tag_front: CATASTROPHE
     print dev_test_utt
     return dev_test_utt
 
@@ -140,8 +145,8 @@ def getSpeechThenToText():    # see https://pypi.python.org/pypi/SpeechRecogniti
     except KeyboardInterrupt:
         pass
 
-def getTag_Location(sentence, categoryDict):
-    tags = {}   # tags is a dictionary for storing tag
+def getTag_Location(sentence):
+    #tags = {}   # tags is a dictionary for storing tag
     #infile = open('yelp_tags_data.txt', 'r')    # input
     #for line in infile: # read
         #if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue # if # or nothing --> skip
@@ -151,100 +156,99 @@ def getTag_Location(sentence, categoryDict):
         #tags.update({linearr[0]:linearr[1]})    # add an object into tags dictionary: key = tag, and value = the synonym list
     #infile.close()
 
-    position_detected_keywords_front = []   # a list for storing front keywords
-    position_detected_keywords_back = []    # a list for storing back keywords
-    infile = open('position_detected_keywords.txt', 'r')
-    while 1:
-        line = infile.readline()
-        if line[0] == '#' or not line: break    # change to back
-        position_detected_keywords_front.append(line.strip('\n').strip('\r\n'))
-    while 1:
-        line = infile.readline()
-        if not line: break
-        position_detected_keywords_back.append(line.strip('\n').strip('\r\n'))
-    infile.close()
- 
-    position_keywords = {} #location dictionary, seems not work
-    infile = open('taipeiLocationDict.txt', 'r')
-    for line in infile:
-        if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue
-        linearr = line.strip('\n').strip('\r\n').split(':')
-        linearr[1] = linearr[1].split(',')
-        if linearr[1][0] == '': linearr[1] = []
-        position_keywords.update({linearr[0]:linearr[1]})
-    infile.close()
+    #position_detected_keywords_front = []   # a list for storing front keywords
+    #position_detected_keywords_back = []    # a list for storing back keywords
+    #infile = open('position_detected_keywords.txt', 'r')
+    #while 1:
+        #line = infile.readline()
+        #if line[0] == '#' or not line: break    # change to back
+        #position_detected_keywords_front.append(line.strip('\n').strip('\r\n'))
+    #while 1:
+        #line = infile.readline()
+        #if not line: break
+        #position_detected_keywords_back.append(line.strip('\n').strip('\r\n'))
+    #infile.close()
+# 
+    #position_keywords = {} #location dictionary, seems not work
+    #infile = open('taipeiLocationDict.txt', 'r')
+    #for line in infile:
+        #if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue
+        #linearr = line.strip('\n').strip('\r\n').split(':')
+        #linearr[1] = linearr[1].split(',')
+        #if linearr[1][0] == '': linearr[1] = []
+        #position_keywords.update({linearr[0]:linearr[1]})
+    #infile.close()
+#
+    #collected_tags = []
+#
+    ## find yelp tag in sentence
+    #denyDict = {}   # I'm going to remove this one
+    #for tag, keywords in categoryDict.items():
+        #for keyword in keywords:
+            #if keyword in sentence: # get only the first one keyword
+                #keyword_pos = sentence.index(keyword)
+                ## if chinese 'no' in sentence no far before the keyword
+                #if u'不' in sentence[keyword_pos-9:keyword_pos]:
+                    #denyDict[tag] = 1.0
+                    #print (u'Detect 不 + ' + keyword).decode('utf8')
+                #else:
+                    #collected_tags.append(tag)
+                #break
+#
+    #print u"getTag_Location 檢查點 ", collected_tags
+#    
+#
+    ## find position base on keyword (but it directly do patteren matching to original sentence, dangerous)
+    #position = ''
+    ##for p, keywords in position_keywords.items():
+        ##for keyword in keywords:
+            ##if keyword in sentence:
+                ##position = p
+                ##break
+    #if position == '':
+        ## find position in sentence. detect keyword, and posseg sentence before the keyword, using nearest n or ns as position
+        #for keyword in position_detected_keywords_front:
+            #if keyword in sentence:
+                #sub_sentence = sentence[:sentence.index(keyword)]
+                #words = pseg.cut(sub_sentence)
+                #for word, tag in list(reversed(list(words))):
+                    #word = word.encode('utf8')
+                    #tag = tag.encode('utf8')    # the word tag given from jieba
+                    #print word.decode('utf-8'), tag.decode('utf-8')
+                    #if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
+                        #break
+                    #position = word + position
+        #if position == '':
+            ## from back
+            #for keyword in position_detected_keywords_back:
+                #if keyword in sentence:
+                    #sub_sentence = sentence[sentence.index(keyword)+len(keyword):]
+                    #words = pseg.cut(sub_sentence)
+                    #for word, tag in list(words):
+                        #word = word.encode('utf8')
+                        #tag = tag.encode('utf8')
+                        #print word.decode('utf-8').encode('big5'), tag.decode('utf-8')
+                        #if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
+                            #break
+                        #position = position + word
+#
+    #print position.decode('utf8')
+#
+    #collected_tags.append(position)
+#
+    #for item in collected_tags:
+        #print item
 
-    collected_tags = []
+    collected_tags = getTag(sentence)[0]
+    geo = getLocation(sentence)
 
-    # find yelp tag in sentence
-    denyDict = {}   # ready to remove
-    for tag, keywords in categoryDict.items():
-        for keyword in keywords:
-            if keyword in sentence: # get only the first one keyword
-                keyword_pos = sentence.index(keyword)
-                # if chinese 'no' in sentence no far before the keyword
-                if '不' in sentence[keyword_pos-9:keyword_pos]:
-                    denyDict[tag] = 1.0
-                    print ('Detect 不 + ' + keyword).decode('utf8')
-                else:
-                    collected_tags.append(tag)
-                break
+    #print ('Tag: ' + collected_tags[0])
+    #print ('Location: ' + collected_tags[1])
 
-    collected_tags.append('餐廳')
-    print "getTag_Location 檢查點"
-    print collected_tags
+    #print ('Try to get the position of ' + position)
+    #geo = getGeocodeByGoogleMap(position)
 
-    # find position base on keyword
-    position = ''
-    for p, keywords in position_keywords.items():
-        for keyword in keywords:
-            if keyword in sentence:
-                position = p
-                break
-    if position == '':
-        # find position in sentence. detect keyword, and posseg sentence before the keyword, using nearest n or ns as position
-        for keyword in position_detected_keywords_front:
-            if keyword in sentence:
-                sub_sentence = sentence[:sentence.index(keyword)]
-                words = pseg.cut(sub_sentence)
-                for word, tag in list(reversed(list(words))):
-                    word = word.encode('utf8')
-                    tag = tag.encode('utf8')    # the word tag given from jieba
-                    print word.decode('utf-8'), tag.decode('utf-8')
-                    if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
-                        break
-                    position = word + position
-        if position == '':
-            # from back
-            for keyword in position_detected_keywords_back:
-                if keyword in sentence:
-                    sub_sentence = sentence[sentence.index(keyword)+len(keyword):]
-                    words = pseg.cut(sub_sentence)
-                    for word, tag in list(words):
-                        word = word.encode('utf8')
-                        tag = tag.encode('utf8')
-                        print word.decode('utf-8').encode('big5'), tag.decode('utf-8')
-                        if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
-                            break
-                        position = position + word
-
-    print position.decode('utf8')
-
-    collected_tags.append(position)
-
-    for item in collected_tags:
-        print item
-
-    print ('Tag: ' + collected_tags[0])
-    print ('Location: ' + collected_tags[1])
-
-    api_calls = []
-    print ('Try to get the position of ' + position)
-    geo = GetGeocode(position)
-#==================================================
-#    geo = [25.019477, 121.541257]   # NTU backdoor
-#==================================================
-    print 'Get GeoCode: ' + str(geo[0]) + ' ' + str(geo[1])
+    api_calls = []    
     param = get_search_parameters(geo[0], geo[1], collected_tags[0])
     api_calls.append( getYelpResults(param) )
     jsonFromYelp = json.dumps(api_calls)
@@ -253,7 +257,7 @@ def getTag_Location(sentence, categoryDict):
     print len(restaurantData[0]["businesses"])
     outputRestaurant = []
 
-    for oneData in restaurantData[0]["businesses"]:     # output (10) result from yelp on console
+    for oneData in restaurantData[0]["businesses"]:
         print oneData["name"]
         print oneData["location"]["address"]
         #print oneData["categories"]
@@ -265,22 +269,99 @@ def getTag_Location(sentence, categoryDict):
 
     return responseSentence, address
 
-def GetGeocode(location):
+
+def getTag(sentence_for_get_tag):
+    category_dictionary = km.loadDictionary("categoryTW.txt")
+    category_keyword_front = km.loadList("category_keyword_front.txt")
+
+    print u"==== 開始測試類型擷取 ====: ", sentence_for_get_tag
+
+    tag_front = 0
+    search_sen = ""
+    for term in category_keyword_front:   # find front keyword (maybe find nothing)
+        if term in sentence_for_get_tag:
+            front_candidate = int( sentence_for_get_tag.find(term) + len(term) )
+            print term, front_candidate
+            if tag_front < front_candidate:
+                tag_front = front_candidate
+                search_sen = sentence_for_get_tag[ sentence_for_get_tag.find(term)+1 : ]
+    if tag_front == 0: search_sen = sentence_for_get_tag   # if find no front keywork, use original sentence
+    print "Search_sentence will be: ", search_sen
+
+    find_category = [""]
+    find_term = [""]
+    for category in category_dictionary:    # find category
+        for term in category_dictionary[ category ]:
+            if term in search_sen:
+                print category, term
+                if len(find_term[0]) < len(term):   # once we found a longer term, replace the older ones
+                    print "不要殺我QQ", "1.", find_term[0], "2.", term, category
+                    find_category = [ category ]
+                    find_term = [ term ]
+                elif len(find_term[0]) == len(term):    # find a term with the same length, join it
+                    print "怎麼沒有!!?"
+                    find_category += [ category ]
+                    if term not in find_term:
+                        find_term += [ term ]
+    print "We've found category: ", find_category
+    print "We've found term: ", find_term
+
+    if len(find_category[0]) == 0: return [ find_category, find_term, 0 ]   # find no category
+    else: return [ find_category, find_term, 1 ]
+
+
+def getLocation(sentence_for_get_location):  # here we use template sentence for getting location
+    location_dictionary = km.loadDictionary("location_dictionary.txt")
+    location_keyword_front = km.loadList("location_keyword_front.txt")
+    location_keyword_back = km.loadList("location_keyword_back.txt")
+
+    print u"==== 開始測試地點擷取 ====: ", sentence_for_get_location
+
+    location_front = 0
+    location_back = 0
+
+    for term_front in location_keyword_front: # find front keyword (maybe find nothing)
+        if term_front in sentence_for_get_location:
+            front_candidate = int( sentence_for_get_location.find(term_front) + len(term_front) )
+            print "front, ", term_front, front_candidate
+            if location_front < front_candidate: location_front = front_candidate
+    for term_back in location_keyword_back:  # find back keyword (there must be one)
+        if term_back in sentence_for_get_location:
+            location_back = int( sentence_for_get_location.find(term_back) )
+            print "back, ", term_back, location_back
+
+    location = sentence_for_get_location[ location_front:location_back ]
+    print len(location)
+    print location_front, location_back, sentence_for_get_location[ location_front:location_back ]
+
+    if location_back == 0:   # Return with Error: Can not find a location, use default location: "NTU backdoor"
+        return [ 1, 25.0209219, 121.5403804 ]
+    else:           # Return normally
+        for coordinates_candidate in location_dictionary:    # try to find the location in location_dict
+            for term in location_dictionary[ coordinates_candidate ]:
+                if location == term:
+                    coordinates_from_dict = [ float( coordinates_candidate.split(u',')[0] ),
+                                              float( coordinates_candidate.split(u',')[1] ), ]
+                    print "Get GeoCode by loca_dict! " + str(coordinates_from_dict[0]) + ' ' + str(coordinates_from_dict[1])
+                    return coordinates + [0]
+        return getGeocodeByGoogleMap( location.encode("utf8") ) + [0]  # go GoogleMap for getting help
+
+
+def getGeocodeByGoogleMap(location_for_get_Geocode):    # notice that it can only eat str format, do encode("utf8") pls
     url = "https://maps.googleapis.com/maps/api/geocode/json?address="
     key = "&key=AIzaSyDU0SvmkoV9K_hm5xqDM39_-acX5HF7IW4"
-    location = "台灣 " + location
-    googleapi_loca = url+location+key
-    f = urllib.urlopen(googleapi_loca)
-    items2 = json.loads(f.read())
-    name_item = items2["results"][0]
-    k =[]
-    k.append(name_item["geometry"]["location"]["lat"])
-    k.append(name_item["geometry"]["location"]["lng"])
-    return k
- 
-def getYelpResults(params):
 
-    #Obtain these from Yelp's manage access page
+    googleapi_loca = url + "台灣+" + location_for_get_Geocode + key
+    rf = urllib.urlopen(googleapi_loca)
+    json_from_GoogleMap = json.loads(rf.read())
+    coordinates = [ json_from_GoogleMap["results"][0]["geometry"]["location"]["lat"],
+                    json_from_GoogleMap["results"][0]["geometry"]["location"]["lng"] ]
+
+    print 'Get GeoCode by Google Map! ' + str(coordinates[0]) + ' ' + str(coordinates[1])
+    return coordinates
+
+
+def getYelpResults(params): # btain these from Yelp's manage access page
     consumer_key = "zL6GUBjcMjK8xFsGhmirmg"
     consumer_secret = "LGix0hLov03PZ7z16svTs1dnMdc"
     token = "7xp93HFfj9gPddJud46SoFEphYObk9Oe"
@@ -300,12 +381,11 @@ def getYelpResults(params):
 
     return data
 
-def get_search_parameters(inLat, inLong, inTerm):
 
-    #See the Yelp API for more details
+def get_search_parameters(inLat, inLong, inTerm):   # see the Yelp API for more details
     params = {}
     params["term"] = inTerm
-    #params["limit"] = 1
+    params["limit"] = 3
     #params["offset"] = 100
     #params["sort"] = 1
     params["category_filter"] = "italian,japanese"
@@ -318,6 +398,7 @@ def get_search_parameters(inLat, inLong, inTerm):
     params["cc"] = "TW"
 
     return params
+
 
 if __name__ == '__main__':
     root = Tk()

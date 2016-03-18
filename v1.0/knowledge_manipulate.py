@@ -5,8 +5,8 @@ def loadList(dictName):
     rf = open("./knowledge/" + dictName, 'r')
     rdata = rf.read()
     rf.close()
-    for term in rdata.split(','):
-        loadDict[ term ] = 1
+    for term in rdata.rstrip("\r\n").split(','):
+        loadDict[ term.decode("utf8") ] = 1
     return loadDict
 
 def loadDictionary(dictName):
@@ -15,8 +15,8 @@ def loadDictionary(dictName):
     rlines = rf.readlines()
     rf.close()
     for line in rlines:
-        data = line.split(':')
-        loadDict[ data[0] ] = data[1].split(',')
+        data = line.rstrip("\r\n").split(':')
+        loadDict[ data[0].decode("utf8") ] = data[1].decode("utf8").split(u',')
     return loadDict
 
 if __name__ == '__main__':
