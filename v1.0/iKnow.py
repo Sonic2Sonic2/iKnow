@@ -3,7 +3,6 @@ import knowledge_manipulate as km
 
 from Tkinter import *
 import speech_recognition as sr
-import jieba.posseg as pseg
 import uniout
 import sys
 import rauth
@@ -100,14 +99,14 @@ class iKnowMainWindow(Frame):   # Main UI interacting with user
 
 
 def getSpeechThenToTextDev(): # for silent testing while developing (kill this function when it's no use)
-    dev_test_utt = u"開發測試：請幫我找台大附近的義大利麵"
     #dev_test_utt = u"開發測試：請幫我找台大附近的義大利麵"  # normal test 
-    #dev_test_utt = u"開發測試：請幫我找一下台大後門附近的義大利麵"  # test loca_dict
+    dev_test_utt = u"開發測試：請幫我找一下台大後門附近的義大利麵"  # test loca_dict
     #dev_test_utt = u"開發測試：台大附近的義大利麵"  # test no location_front
     #dev_test_utt = u"開發測試：我想吃義大利麵"    # test no location
     #dev_test_utt = u"開發測試：台大附近的咖哩店"  # test no front
     #dev_test_utt = u"開發測試：台大附近義大利麵"  # test no front
-    #dev_test_utt = u"開發測試：我想吃迴轉壽司" # test a no-use category
+    #dev_test_utt = u"開發測試：我想吃迴轉壽司" # test no-use category
+    #dev_test_utt = u"開發測試：台大附近的牛肉麵"    # test no category
     #dev_test_utt = u"開發測試：台大附近奶凍捲"   # test no category and tag_front: CATASTROPHE
     print dev_test_utt
     return dev_test_utt
@@ -146,107 +145,8 @@ def getSpeechThenToText():    # see https://pypi.python.org/pypi/SpeechRecogniti
         pass
 
 def getTag_Location(sentence):
-    #tags = {}   # tags is a dictionary for storing tag
-    #infile = open('yelp_tags_data.txt', 'r')    # input
-    #for line in infile: # read
-        #if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue # if # or nothing --> skip
-        #linearr = line.strip('\n').strip('\r\n').split(':') # split tag and synonyms by ':'
-        #linearr[1] = linearr[1].split(',')  # the synonyms are split into a list by ','
-        #if linearr[1][0] == '': linearr[1] = [] # if the there is nothing bu '' in the synonym list, replace it by a null list
-        #tags.update({linearr[0]:linearr[1]})    # add an object into tags dictionary: key = tag, and value = the synonym list
-    #infile.close()
-
-    #position_detected_keywords_front = []   # a list for storing front keywords
-    #position_detected_keywords_back = []    # a list for storing back keywords
-    #infile = open('position_detected_keywords.txt', 'r')
-    #while 1:
-        #line = infile.readline()
-        #if line[0] == '#' or not line: break    # change to back
-        #position_detected_keywords_front.append(line.strip('\n').strip('\r\n'))
-    #while 1:
-        #line = infile.readline()
-        #if not line: break
-        #position_detected_keywords_back.append(line.strip('\n').strip('\r\n'))
-    #infile.close()
-# 
-    #position_keywords = {} #location dictionary, seems not work
-    #infile = open('taipeiLocationDict.txt', 'r')
-    #for line in infile:
-        #if line[0] == '#' or line[0] == '\r' or line[0] == '\n': continue
-        #linearr = line.strip('\n').strip('\r\n').split(':')
-        #linearr[1] = linearr[1].split(',')
-        #if linearr[1][0] == '': linearr[1] = []
-        #position_keywords.update({linearr[0]:linearr[1]})
-    #infile.close()
-#
-    #collected_tags = []
-#
-    ## find yelp tag in sentence
-    #denyDict = {}   # I'm going to remove this one
-    #for tag, keywords in categoryDict.items():
-        #for keyword in keywords:
-            #if keyword in sentence: # get only the first one keyword
-                #keyword_pos = sentence.index(keyword)
-                ## if chinese 'no' in sentence no far before the keyword
-                #if u'不' in sentence[keyword_pos-9:keyword_pos]:
-                    #denyDict[tag] = 1.0
-                    #print (u'Detect 不 + ' + keyword).decode('utf8')
-                #else:
-                    #collected_tags.append(tag)
-                #break
-#
-    #print u"getTag_Location 檢查點 ", collected_tags
-#    
-#
-    ## find position base on keyword (but it directly do patteren matching to original sentence, dangerous)
-    #position = ''
-    ##for p, keywords in position_keywords.items():
-        ##for keyword in keywords:
-            ##if keyword in sentence:
-                ##position = p
-                ##break
-    #if position == '':
-        ## find position in sentence. detect keyword, and posseg sentence before the keyword, using nearest n or ns as position
-        #for keyword in position_detected_keywords_front:
-            #if keyword in sentence:
-                #sub_sentence = sentence[:sentence.index(keyword)]
-                #words = pseg.cut(sub_sentence)
-                #for word, tag in list(reversed(list(words))):
-                    #word = word.encode('utf8')
-                    #tag = tag.encode('utf8')    # the word tag given from jieba
-                    #print word.decode('utf-8'), tag.decode('utf-8')
-                    #if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
-                        #break
-                    #position = word + position
-        #if position == '':
-            ## from back
-            #for keyword in position_detected_keywords_back:
-                #if keyword in sentence:
-                    #sub_sentence = sentence[sentence.index(keyword)+len(keyword):]
-                    #words = pseg.cut(sub_sentence)
-                    #for word, tag in list(words):
-                        #word = word.encode('utf8')
-                        #tag = tag.encode('utf8')
-                        #print word.decode('utf-8').encode('big5'), tag.decode('utf-8')
-                        #if tag != 'n' and tag != 'ns' and tag != 'a' and tag != 'j':
-                            #break
-                        #position = position + word
-#
-    #print position.decode('utf8')
-#
-    #collected_tags.append(position)
-#
-    #for item in collected_tags:
-        #print item
-
     collected_tags = getTag(sentence)[0]
     geo = getLocation(sentence)
-
-    #print ('Tag: ' + collected_tags[0])
-    #print ('Location: ' + collected_tags[1])
-
-    #print ('Try to get the position of ' + position)
-    #geo = getGeocodeByGoogleMap(position)
 
     api_calls = []    
     param = get_search_parameters(geo[0], geo[1], collected_tags[0])
@@ -274,37 +174,27 @@ def getTag(sentence_for_get_tag):
     category_dictionary = km.loadDictionary("categoryTW.txt")
     category_keyword_front = km.loadList("category_keyword_front.txt")
 
-    print u"==== 開始測試類型擷取 ====: ", sentence_for_get_tag
-
     tag_front = 0
     search_sen = ""
     for term in category_keyword_front:   # find front keyword (maybe find nothing)
         if term in sentence_for_get_tag:
             front_candidate = int( sentence_for_get_tag.find(term) + len(term) )
-            print term, front_candidate
             if tag_front < front_candidate:
                 tag_front = front_candidate
                 search_sen = sentence_for_get_tag[ sentence_for_get_tag.find(term)+1 : ]
     if tag_front == 0: search_sen = sentence_for_get_tag   # if find no front keywork, use original sentence
-    print "Search_sentence will be: ", search_sen
 
     find_category = [""]
     find_term = [""]
     for category in category_dictionary:    # find category
         for term in category_dictionary[ category ]:
             if term in search_sen:
-                print category, term
                 if len(find_term[0]) < len(term):   # once we found a longer term, replace the older ones
-                    print "不要殺我QQ", "1.", find_term[0], "2.", term, category
                     find_category = [ category ]
                     find_term = [ term ]
-                elif len(find_term[0]) == len(term):    # find a term with the same length, join it
-                    print "怎麼沒有!!?"
+                elif len(find_term[0]) == len(term):     # same length term, check then join
                     find_category += [ category ]
-                    if term not in find_term:
-                        find_term += [ term ]
-    print "We've found category: ", find_category
-    print "We've found term: ", find_term
+                    if term not in find_term: find_term += [ term ]
 
     if len(find_category[0]) == 0: return [ find_category, find_term, 0 ]   # find no category
     else: return [ find_category, find_term, 1 ]
@@ -315,34 +205,26 @@ def getLocation(sentence_for_get_location):  # here we use template sentence for
     location_keyword_front = km.loadList("location_keyword_front.txt")
     location_keyword_back = km.loadList("location_keyword_back.txt")
 
-    print u"==== 開始測試地點擷取 ====: ", sentence_for_get_location
-
     location_front = 0
     location_back = 0
-
     for term_front in location_keyword_front: # find front keyword (maybe find nothing)
         if term_front in sentence_for_get_location:
             front_candidate = int( sentence_for_get_location.find(term_front) + len(term_front) )
-            print "front, ", term_front, front_candidate
             if location_front < front_candidate: location_front = front_candidate
     for term_back in location_keyword_back:  # find back keyword (there must be one)
         if term_back in sentence_for_get_location:
             location_back = int( sentence_for_get_location.find(term_back) )
-            print "back, ", term_back, location_back
 
     location = sentence_for_get_location[ location_front:location_back ]
-    print len(location)
-    print location_front, location_back, sentence_for_get_location[ location_front:location_back ]
 
-    if location_back == 0:   # Return with Error: Can not find a location, use default location: "NTU backdoor"
+    if location_back == 0:  # Return with Error: Can not find a location, use default location: "NTU backdoor"
         return [ 1, 25.0209219, 121.5403804 ]
     else:           # Return normally
-        for coordinates_candidate in location_dictionary:    # try to find the location in location_dict
+        for coordinates_candidate in location_dictionary:   # try to find the location in location_dict
             for term in location_dictionary[ coordinates_candidate ]:
                 if location == term:
-                    coordinates_from_dict = [ float( coordinates_candidate.split(u',')[0] ),
+                    coordinates = [ float( coordinates_candidate.split(u',')[0] ),
                                               float( coordinates_candidate.split(u',')[1] ), ]
-                    print "Get GeoCode by loca_dict! " + str(coordinates_from_dict[0]) + ' ' + str(coordinates_from_dict[1])
                     return coordinates + [0]
         return getGeocodeByGoogleMap( location.encode("utf8") ) + [0]  # go GoogleMap for getting help
 
