@@ -169,6 +169,7 @@ def getTag_Location(sentence):
 
     return responseSentence, address
 
+def get
 
 def getTag(sentence_for_get_tag):
     category_dictionary = km.loadDictionary("categoryTW.txt")
