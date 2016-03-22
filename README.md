@@ -1,13 +1,14 @@
-A start point for a new stage
------------------------------
-There are 3 folders here:
-
-### former files
-The files before this modification.
-
-### v0.9
-The files clone from HCChang’s computer. Also the latest version we presented on AAI 2015 term project.
-(Notice that the output format is big5.)
+iKnow: a Context-aware Restaurant Recommender System (In development)
+---------------------------------------------------------------------
 
 ### v1.0
-Originally, the mirror of files in v0.9. Then I will do the cleaning job.
+A simple tool that getting recommended restaurants from yelp with one Chinese sentence (speech).
+
+### v1.1
+Todo List:
+ - Replace the origin yelp web api function by yelp-python package.
+ - Build local restaurant database with tags.
+ - Support negative tags recognition.
+ - Access to restaurant ontologies.
+ - Connect to itri tts.
+ - Get data from foursquare-like apps.
