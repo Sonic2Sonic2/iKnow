@@ -37,7 +37,7 @@ scandinavian:北歐
 indonesian:印尼
 indpak:印度,咖哩
 cuban:古巴
-singaporean:台灣,台式,台菜
+taiwanese:台灣,台式,台菜
 cafes:咖啡
 himalayan:尼泊爾,喜馬拉雅
 international:國際
@@ -97,7 +97,7 @@ vegetarian:吃素,素食
 burmese:緬甸
 cajun:美國南
 tradamerican:美國,美式
-italian:義大利,義式
+italian:義大利麵,義式
 buffets,cafeteria:自助餐
 british:英國,英式
 gastropubs:英式酒吧,英式餐館,英式餐館
@@ -124,7 +124,7 @@ shanghainese:上海
 pekinese:北京,北平
 szechuan:四川,川菜
 hakka:客家
-cantonese:廣東,廣式,燒臘,茶餐廳,粵式
+cantonese:廣東,廣式,燒臘,茶餐廳,粵式,港式
 hunan:湖南
 teochew:潮州
 fuzhou:福州
